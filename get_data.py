@@ -15,6 +15,8 @@ WHITESANDS_LNG = -5.2977
 
 # -- send request --
 
+# TODO: get sunrise and sunset times and only get forcasts for these times, TODO get forcast for the next 7 days in one request if possible 
+
 # Get first hour of today
 TIME_AT_START_OF_DAY = arrow.now().floor('day')
 
@@ -112,16 +114,21 @@ class Surf_Break_Config:
 # function that calculates if conditions meet preferences
 #def check_the_surf(spot_config, latest_forcast)
 	# is there wind?
-		# yes - use break_direction and wind direction to determin relative_wind_direction (to the beach)
+		# yes - (function relative_direction(break_direction, wind_or_swell_direction)) use break_direction and wind direction to determin relative_wind_direction (to the beach)
 			# determin using relative_wind_direction and wind_speed it the surf will be clean or sloppy
 		# no - good
 	# is there swell?
-	# i need wave_power unit which factors height and period
-	# use wave_power and swell_direction to determin if there will be swell at the specified beach
+	# (function) i need wave_power unit which factors height and period
 	# what is the wave_power of the secondary swell?
 	# Do the primary and secondary swells combine? (are comming from simmilar directions)
 		# yes - what is the combined_wave_power?
 		# no - will the surf be messy as a result?
+	# calculate relative swell direction
+	# use combined_wave_power and swell_direction to determin if there will be swell at the specified beach
+
+def get_relative_direction(break_direction, wind_or_swell_direction):
+	result = wind_or_swell_direction - break_diresction
+	return result
 
 # function that sends notification
 
