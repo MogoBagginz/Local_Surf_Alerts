@@ -130,6 +130,11 @@ def get_relative_direction(break_direction, wind_or_swell_direction):
 	result = wind_or_swell_direction - break_diresction
 	return result
 
+def get_wave_energy(swell_period, swell_height)
+	swell_frequency = 1/swell_period
+	wave_energy = swell_frequency * swell_height
+	return wave_energy
+
 # function that sends notification
 
 
