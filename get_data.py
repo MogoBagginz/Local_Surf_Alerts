@@ -39,7 +39,7 @@ def fetch_surf_forecast(start_time, end_time, lat, lng, api_key):
     )
     return response.json()
 
-def fetch_tyde(start_time, end_time, lat, lng, api_key)
+def fetch_tide(start_time, end_time, lat, lng, api_key):
 	responce = requests.get(
 		'https://api.stormglass.io/v2/tide/extremes/point',
 		params={
@@ -156,9 +156,12 @@ if __name__ == "__main__":
 
 	# get latest forcast
 
-	latest_forcast = fetch_surf_forecast(whitesands_config.latitude, whitesands_config.longitude, API_KEY)
+	# latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_config.latitude, whitesands_config.longitude, API_KEY)
+	# latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_config.latitude, whitesands_config.longitude, API_KEY)
 	
 	# save forcast (for debuggin and later for archiving)
-	#with open('data.json', 'w') as json_file:
+	#with open('forcast.json', 'w') as json_file:
 	#	json.dump(latest_forcast, json_file, indent=4)
-	
+	# save tide (for debuggin and later for archiving)
+	#with open('tide.json', 'w') as json_file:
+	#	json.dump(latest_tides, json_file, indent=4)
