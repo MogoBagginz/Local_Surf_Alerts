@@ -135,6 +135,15 @@ def get_wave_energy(swell_period, swell_height)
 	wave_energy = swell_frequency * swell_height
 	return wave_energy
 
+def get_combined_wave_energy(energy_wave_one, energy_wave_two, relative_direction):
+	relative_direction_radians = math.radians(relative_direction)
+	combined_wave_energy = energy_wave_one + energy_wave_two + math.sqrt(energy_wave_one * energy_wave_two) * math.cos(relative_energy_radians)
+	return combined_wave_energy
+
+# function that returns the tide hight when given a location
+
+# function that talkes time and location when the surf is good and it saves all the conditions into a file. the file can be used when configuring max and min values for a spot.	
+
 # function that sends notification
 
 
