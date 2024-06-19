@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import math
 import arrow
 import requests
 import json
@@ -112,7 +113,7 @@ class Surf_Break_Config:
 			print("Configuration file not found. Using default settings.")
 
 # function that calculates if conditions meet preferences
-#def check_the_surf(spot_config, latest_forcast)
+#def check_the_surf(spot_config, latest_forcast):
 	# is there wind?
 		# yes - (function relative_direction(break_direction, wind_or_swell_direction)) use break_direction and wind direction to determin relative_wind_direction (to the beach)
 			# determin using relative_wind_direction and wind_speed it the surf will be clean or sloppy
@@ -130,7 +131,7 @@ def get_relative_direction(break_direction, wind_or_swell_direction):
 	result = wind_or_swell_direction - break_diresction
 	return result
 
-def get_wave_energy(swell_period, swell_height)
+def get_wave_energy(swell_period, swell_height):
 	swell_frequency = 1/swell_period
 	wave_energy = swell_frequency * swell_height
 	return wave_energy
@@ -142,7 +143,7 @@ def get_combined_wave_energy(energy_wave_one, energy_wave_two, relative_directio
 
 # function that returns the tide hight when given a location
 
-# function that talkes time and location when the surf is good and it saves all the conditions into a file. the file can be used when configuring max and min values for a spot.	
+# function that takes time and location when the surf is good and it saves all the conditions into a file. the file can be used when configuring max and min values for a spot.
 
 # function that sends notification
 
