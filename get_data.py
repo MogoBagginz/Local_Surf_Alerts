@@ -9,7 +9,8 @@ API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac1300
 
 # -- send request --
 
-# TODO: get sunrise and sunset times and only get forcasts for these times, TODO get forcast for the next 7 days in one request if possible 
+# TODO: get sunrise and sunset times and only get forcasts for these times
+# TODO get forcast for the next 7 days in one request if possible 
 
 # Get first hour of today
 TIME_AT_START_OF_DAY = arrow.now().floor('day')
@@ -23,7 +24,10 @@ def fetch_surf_forecast(start_time, end_time, lat, lng, api_key):
         params={
             'lat': lat,
             'lng': lng,
-            'params': ','.join(['swellDirection', 'swellHeight', 'swellPeriod', 'secondarySwellDirection', 'secondarySwellHeight', 'secondarySwellPeriod', 'windDirection', 'windSpeed']),
+            'params': ','.join(['swellDirection', 'swellHeight', 'swellPeriod',
+								'secondarySwellDirection',
+								'secondarySwellHeight', 'secondarySwellPeriod',
+								'windDirection', 'windSpeed']),
 	    	'start': start_time.to('UTC').timestamp(),  # Convert to UTC timestamp
     		'end': end_time.to('UTC').timestamp()  # Convert to UTC timestamp
         },
@@ -52,13 +56,15 @@ def fetch_tide(start_time, end_time, lat, lng, api_key):
 #TODO create function that creates a new surf_break_configuration
 #TODO create function that changes a surf_break_configuration
 	
-# configure good conditions for each spot TODO:tide height TODO:secondary swell TODO: put this in another file and import it here.
 class Surf_Break_Config:
-	def __init__(self, name='Default name', latitude=None, longitude=None, break_direction=None,ideal_swell_direction=225, min_swell_height=1, min_swell_period=7, max_wind_speed=30):
+	def __init__(self, name='Default name', latitude=None, longitude=None,
+				 break_direction=None,ideal_swell_direction=225,
+				 min_swell_height=1, min_swell_period=7, max_wind_speed=30):
 		self.name 					= name
 		self.latitude				= latitude
 		self.longitude				= longitude
-		self.break_direction 		= break_direction # the angle that the beach or reef break faces in degrees
+		# break_direction = the angle that the beach or reef break faces in degrees
+		self.break_direction 		= break_direction
 		self.ideal_swell_direction 	= ideal_swell_direction
 		self.min_swell_height 		= min_swell_height
 		self.min_swell_period 		= min_swell_period
@@ -85,7 +91,10 @@ class Surf_Break_Config:
 			print("Configuration file not found. Using default settings.")
 
 class Surf_Break_Conditions:
-	def __init__(self, name=None, lat=None, long=None, time=None, date=None, primary_wave_energy=None, secondary_wave_energy=None, combined_wave_energy=None, relative_swell_direction=None, effective_power=None, relative_wind_direction=None):
+	def __init__(self, name=None, lat=None, long=None, time=None, date=None,
+				 primary_wave_energy=None, secondary_wave_energy=None,
+				 combined_wave_energy=None, relative_swell_direction=None,
+				 effective_power=None, relative_wind_direction=None):
 		self.name = name
 		self.lat = lat
 		self.long = long
@@ -103,19 +112,24 @@ class Surf_Break_Conditions:
 	# -- is there spell --
 	# -- is it clean --
 
-# is there swell func ... or process forcast for spot and do it when you get the forcast for every spot
 def process_forcast(spot_conf, forcast, spot_conditions):
-	spot_conditions.primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']), float(forcast['hours'][0]['swellHeight']['noaa']))
-	# secondary_wave_energy = get_wave_energy(forcast['secondarySwellPeriod'], forcast['secondarySwellHeight'])
-	# combined_wave_energy = get_combined_wave_energy(primary_wave_energy, secondary_wave_energy)
-	# get relative energy
-	# combined_swell_direction = get_relatice_direction(forcast['swellDirection'], forcast['secondarySwellDirection'])
-	# relative_swell_direction = get_relative_direction(spot_conf.break_direction, combined_swell_direction)
-		# get relative swell direction
-	# effective_power = calculate_effective_power(combined_wave_energy, relative_swell_direction)
-		# calculate relative energy
+	primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
+										  float(forcast['hours'][0]['swellHeight']['noaa']))
+	secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
+										    float(forcast['hours'][0]['secondarySwellHeight']['noaa']))
+	combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
+												    secondary_wave_energy)
+	combined_swell_direction = get_relatice_direction(forcast['hours'][0]['swellDirection']['noaa'],
+													  forcast['hours'][0]['secondarySwellDirection']['noaa'])
+	relative_swell_direction = get_relative_direction(spot_conf.break_direction, combined_swell_direction)
+	effective_power = calculate_effective_power(combined_wave_energy, relative_swell_direction)
 	
-	# store relative energy in something
+	spot_conditions.primary_wave_energy = primary_wave_energy
+	spot_conditions.secondary_wave_energy = secondary_wave_energy
+	spot_conditions.combined_wave_energy = combined_wave_energy
+	spot_conditions.combined_swell_direction = combined_swell_direction
+	spot_conditions.relative_swell_direction = relative_swell_direction
+	spot_conditions.effective_power = effective_power
 
 # is it clean func
 	# -- is it clean --
@@ -131,8 +145,9 @@ def calculate_effective_power(P, theta):
     """Calculate the effective power of the wave hitting the beach at an angle."""
     P_eff = P * math.cos(math.radians(theta))
     return P_eff
-			
-def get_relative_direction(primary_direction, secondary_direction): # TODO give option to make it only return a positive integer
+
+# TODO give option to make it only return a positive integer			
+def get_relative_direction(primary_direction, secondary_direction):	
 	result = secondary_direction - primary_diresction
 	return result
 
@@ -141,9 +156,9 @@ def get_wave_energy(swell_period, swell_height):
 	wave_energy = swell_frequency * swell_height
 	return wave_energy
 
-def get_combined_wave_energy(energy_wave_one, energy_wave_two, relative_direction):
+def get_combined_wave_energy(e_1, e_2, relative_direction):
 	relative_direction_radians = math.radians(relative_direction)
-	combined_wave_energy = energy_wave_one + energy_wave_two + math.sqrt(energy_wave_one * energy_wave_two) * math.cos(relative_energy_radians)
+	combined_wave_energy = e_1 + e_2 + math.sqrt(e_1 * e_2) * math.cos(relative_energy_radians)
 	return combined_wave_energy
 
 # function that returns the tide hight when given a location
@@ -180,15 +195,23 @@ if __name__ == "__main__":
 	current_time = arrow.now()
 	last_forcast_time = arrow.get(latest_forcast['hours'][0]['time'])
 	if current_time.format('YYYY-MM-DD') != last_forcast_time.format('YYYY-MM-DD'):
-		latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
-		latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
+		liatest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY,
+											  TIME_AT_END_OF_DAY,
+											  whitesands_conf.latitude,
+											  whitesands_conf.longitude,
+											  API_KEY)
+		latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY,
+								  whitesands_conf.latitude,
+								  whitesands_conf.longitude, API_KEY)
+
+		# save forcast (for debuggin and later for archiving)
+		with open('forcast.json', 'w') as json_file:
+			json.dump(latest_forcast, json_file, indent=4)
+
+		# save tide (for debuggin and later for archiving)
+		with open('tide.json', 'w') as json_file:
+			json.dump(latest_tides, json_file, indent=4)
 	
 	# process forcast
 	process_forcast(whitesands_conf, latest_forcast, whitesands_conditions)
 
-	# save forcast (for debuggin and later for archiving)
-	with open('forcast.json', 'w') as json_file:
-		json.dump(latest_forcast, json_file, indent=4)
-	# save tide (for debuggin and later for archiving)
-	with open('tide.json', 'w') as json_file:
-		json.dump(latest_tides, json_file, indent=4)
