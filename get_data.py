@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
 
-# CURRENTLY NOT RUNNING - not recognising json file in prosses_forcast func
-
 import math
 import arrow
 import requests
 import json
-
-
-
-# API endpoint = GET https://api.stormglass.io/v2
 
 API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac130004"
 
@@ -104,22 +98,6 @@ class Surf_Break_Conditions:
 		self.effective_power = effective_power
 		self.relative_wind_direction = relative_wind_direction
 
-# function that calculates if conditions meet preferences
-#def check_the_surf(spot_config, latest_forcast):
-	# is there wind?
-		# yes - (function relative_direction(break_direction, wind_or_swell_direction)) use break_direction and wind direction to determin relative_wind_direction (to the beach)
-			# determin using relative_wind_direction and wind_speed it the surf will be clean or sloppy
-		# no - good
-	# is there swell?
-	# (function) i need wave_power unit which factors height and period
-	# what is the wave_power of the secondary swell?
-	# Do the primary and secondary swells combine? (are comming from simmilar directions)
-		# yes - what is the combined_wave_power?
-		# no - will the surf be messy as a result?
-	# calculate relative swell direction
-	# use combined_wave_power and swell_direction to determin if there will be swell at the specified beach
-
-# ----psudo code round 2 -----
 # check_surf_at_spot() 
 	# store surf break name, lat and long, time/date in the data storge
 	# -- is there spell --
@@ -127,10 +105,6 @@ class Surf_Break_Conditions:
 
 # is there swell func ... or process forcast for spot and do it when you get the forcast for every spot
 def process_forcast(spot_conf, forcast, spot_conditions):
-	print("---- process_forcast () -----")
-	print("swell Period from inside func : ", forcast['hours'][0]['swellPeriod']['noaa'])
-	print("swell Height from inside func : ", forcast['hours'][0]['swellHeight']['noaa'])
-	# get combined wave energies
 	spot_conditions.primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']), float(forcast['hours'][0]['swellHeight']['noaa']))
 	# secondary_wave_energy = get_wave_energy(forcast['secondarySwellPeriod'], forcast['secondarySwellHeight'])
 	# combined_wave_energy = get_combined_wave_energy(primary_wave_energy, secondary_wave_energy)
@@ -196,23 +170,25 @@ if __name__ == "__main__":
 
 	# spot conditions
 	whitesands_conditions = Surf_Break_Conditions()
-	whitesands_conditions.primary_wave_energy = 123
-	
 
 	# get latest forcast
 	
-	#TODO: check if forcast has been checked for today already, if it has then dont check again
-	#TODO: open the last forcast
-	latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
-	latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
+	file_path = "./data.json"
+	with open(file_path, 'r') as file:
+		latest_forcast = json.load(file)
+
+	current_time = arrow.now()
+	last_forcast_time = arrow.get(latest_forcast['hours'][0]['time'])
+	if current_time.format('YYYY-MM-DD') != last_forcast_time.format('YYYY-MM-DD'):
+		latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
+		latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
+	
 	# process forcast
 	process_forcast(whitesands_conf, latest_forcast, whitesands_conditions)
-	print("primary wave energy : ", whitesands_conditions.primary_wave_energy)
 
-	print("swell period: ", latest_forcast['hours'][0]['swellPeriod']['noaa'])
 	# save forcast (for debuggin and later for archiving)
-	#with open('forcast.json', 'w') as json_file:
-	#	json.dump(latest_forcast, json_file, indent=4)
+	with open('forcast.json', 'w') as json_file:
+		json.dump(latest_forcast, json_file, indent=4)
 	# save tide (for debuggin and later for archiving)
-	#with open('tide.json', 'w') as json_file:
-	#	json.dump(latest_tides, json_file, indent=4)
+	with open('tide.json', 'w') as json_file:
+		json.dump(latest_tides, json_file, indent=4)
