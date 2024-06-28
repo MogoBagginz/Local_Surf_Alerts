@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# CURRENTLY NOT RUNNING - not recognising json file in prosses_forcast func
+
 import math
 import arrow
 import requests
@@ -10,9 +12,6 @@ import json
 # API endpoint = GET https://api.stormglass.io/v2
 
 API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac130004"
-
-WHITESANDS_LAT = 51.8969 
-WHITESANDS_LNG = -5.2977
 
 # -- send request --
 
@@ -30,7 +29,7 @@ def fetch_surf_forecast(start_time, end_time, lat, lng, api_key):
         params={
             'lat': lat,
             'lng': lng,
-            'params': ','.join(['swellDirection', 'swellHeight', 'swellPeriod', 'windDirection', 'windSpeed']),
+            'params': ','.join(['swellDirection', 'swellHeight', 'swellPeriod', 'secondarySwellDirection', 'secondarySwellHeight', 'secondarySwellPeriod', 'windDirection', 'windSpeed']),
 	    	'start': start_time.to('UTC').timestamp(),  # Convert to UTC timestamp
     		'end': end_time.to('UTC').timestamp()  # Convert to UTC timestamp
         },
@@ -70,30 +69,7 @@ class Surf_Break_Config:
 		self.min_swell_height 		= min_swell_height
 		self.min_swell_period 		= min_swell_period
 		self.max_wind_speed 		= max_wind_speed
-
-	def update_name(self, name):
-		self.name = name
-
-	def update_latitude(self, latitude):
-		self.latitude = latitude
-
-	def update_longitude(self, longitude):
-		self.longitude = longitude
-
-	def update_break_direction(self, break_direction):
-		self.break_direction = break_direction
-
-	def update_ideal_swell_direction(self, ideal_swell_direction):
-		self.ideal_swell_direction = ideal_swell_direction
-
-	def update_min_swell_height(self, min_swell_height):
-		self.min_swell_height = min_swell_height
-
-	def update_min_swell_period(self, min_swell_period):
-		self.min_swell_period = min_swell_period
-
-	def update_max_wind_speed(self, max_wind_speed):
-		self.max_wind_speed = max_wind_speed
+		self.max_wind_speed 		= max_wind_speed
 
 	def save_to_file(self, file_path):
 		with open(file_path, 'w') as file:
@@ -103,7 +79,9 @@ class Surf_Break_Config:
 		try:
 			with open(file_path, 'r') as file:
 				data = json.load(file)
-				self.name 		= data['name']
+				self.name 					= data['name']
+				self.latitude				= data['latitude']
+				self.longitude				= data['longitude']
 				self.break_direction 		= data['break_direction']
 				self.ideal_swell_direction 	= data['ideal_swell_direction']
 				self.min_swell_height 		= data['min_swell_height']
@@ -111,6 +89,20 @@ class Surf_Break_Config:
 				self.max_wind_speed 		= data['max_wind_speed']
 		except FileNotFoundError:
 			print("Configuration file not found. Using default settings.")
+
+class Surf_Break_Conditions:
+	def __init__(self, name=None, lat=None, long=None, time=None, date=None, primary_wave_energy=None, secondary_wave_energy=None, combined_wave_energy=None, relative_swell_direction=None, effective_power=None, relative_wind_direction=None):
+		self.name = name
+		self.lat = lat
+		self.long = long
+		self.time = time
+		self.date = date
+		self.primary_wave_energy = primary_wave_energy
+		self.secondry_wave_energy = secondary_wave_energy
+		self.combined_wave_energy = combined_wave_energy
+		self.relative_swell_direction = relative_swell_direction
+		self.effective_power = effective_power
+		self.relative_wind_direction = relative_wind_direction
 
 # function that calculates if conditions meet preferences
 #def check_the_surf(spot_config, latest_forcast):
@@ -127,8 +119,47 @@ class Surf_Break_Config:
 	# calculate relative swell direction
 	# use combined_wave_power and swell_direction to determin if there will be swell at the specified beach
 
-def get_relative_direction(break_direction, wind_or_swell_direction):
-	result = wind_or_swell_direction - break_diresction
+# ----psudo code round 2 -----
+# check_surf_at_spot() 
+	# store surf break name, lat and long, time/date in the data storge
+	# -- is there spell --
+	# -- is it clean --
+
+# is there swell func ... or process forcast for spot and do it when you get the forcast for every spot
+def process_forcast(spot_conf, forcast, spot_conditions):
+	print("---- process_forcast () -----")
+	print("swell Period from inside func : ", forcast['hours'][0]['swellPeriod']['noaa'])
+	print("swell Height from inside func : ", forcast['hours'][0]['swellHeight']['noaa'])
+	# get combined wave energies
+	spot_conditions.primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']), float(forcast['hours'][0]['swellHeight']['noaa']))
+	# secondary_wave_energy = get_wave_energy(forcast['secondarySwellPeriod'], forcast['secondarySwellHeight'])
+	# combined_wave_energy = get_combined_wave_energy(primary_wave_energy, secondary_wave_energy)
+	# get relative energy
+	# combined_swell_direction = get_relatice_direction(forcast['swellDirection'], forcast['secondarySwellDirection'])
+	# relative_swell_direction = get_relative_direction(spot_conf.break_direction, combined_swell_direction)
+		# get relative swell direction
+	# effective_power = calculate_effective_power(combined_wave_energy, relative_swell_direction)
+		# calculate relative energy
+	
+	# store relative energy in something
+
+# is it clean func
+	# -- is it clean --
+		# does the swell make it messy?
+			# if primary and secondary swells have equalish energy and are less than 90 relative to the break
+				# get relative primary and secondary swell direction (100 messy 0 not messy)
+		# does the wind make it massy?
+			# is the reladive wind direction offsure
+				# (yes) is the wind above max_offsure_wind_speed (100 to 0 messy)
+				# (no) grade messyness in relation to max_offshore_wind_speed
+
+def calculate_effective_power(P, theta):
+    """Calculate the effective power of the wave hitting the beach at an angle."""
+    P_eff = P * math.cos(math.radians(theta))
+    return P_eff
+			
+def get_relative_direction(primary_direction, secondary_direction): # TODO give option to make it only return a positive integer
+	result = secondary_direction - primary_diresction
 	return result
 
 def get_wave_energy(swell_period, swell_height):
@@ -152,23 +183,33 @@ if __name__ == "__main__":
 	
 	# load spot configurations
 
-	whitesands_config = Surf_Break_Config()
-	whitesands_config.update_name('whitesands')
-	whitesands_config.update_latitude(51.8969)
-	whitesands_config.update_longitude(-5.2977)
-	whitesands_config.update_break_direction(270)
-	whitesands_config.update_ideal_swell_direction(270)
-	whitesands_config.update_min_swell_height(1)
-	whitesands_config.update_min_swell_period(7)
-	whitesands_config.update_max_wind_speed(30)
+	whitesands_conf = Surf_Break_Config()
+	whitesands_conf.name = 'whitesands'
+	whitesands_conf.latitude = 51.8969
+	whitesands_conf.longitude = -5.2977
+	whitesands_conf.break_direction = 270
+	whitesands_conf.ideal_swell_direction = 270
+	whitesands_conf.min_swell_height = 1
+	whitesands_conf.min_swell_period = 7
+	whitesands_conf.max_wind_speed = 30
+	whitesands_conf.save_to_file('whitesands_conf.json')
 
-	whitesands_config.save_to_file('whitesands_config.json')
+	# spot conditions
+	whitesands_conditions = Surf_Break_Conditions()
+	whitesands_conditions.primary_wave_energy = 123
+	
 
 	# get latest forcast
-
-	# latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_config.latitude, whitesands_config.longitude, API_KEY)
-	# latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_config.latitude, whitesands_config.longitude, API_KEY)
 	
+	#TODO: check if forcast has been checked for today already, if it has then dont check again
+	#TODO: open the last forcast
+	latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
+	latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY, whitesands_conf.latitude, whitesands_conf.longitude, API_KEY)
+	# process forcast
+	process_forcast(whitesands_conf, latest_forcast, whitesands_conditions)
+	print("primary wave energy : ", whitesands_conditions.primary_wave_energy)
+
+	print("swell period: ", latest_forcast['hours'][0]['swellPeriod']['noaa'])
 	# save forcast (for debuggin and later for archiving)
 	#with open('forcast.json', 'w') as json_file:
 	#	json.dump(latest_forcast, json_file, indent=4)
