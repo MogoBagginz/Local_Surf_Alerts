@@ -135,7 +135,7 @@ def process_forcast(spot_conf, forcast, spot_conditions):
 	secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
 										    float(forcast['hours'][0]['secondarySwellHeight']['noaa']))
 	combined_swell_dir = get_relative_dir(forcast['hours'][0]['swellDirection']['noaa'],
-													  forcast['hours'][0]['secondarySwellDirection']['noaa'])
+										  forcast['hours'][0]['secondarySwellDirection']['noaa'])
 	combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
 												    secondary_wave_energy,
 													combined_swell_dir)
@@ -164,11 +164,24 @@ def process_forcast(spot_conf, forcast, spot_conditions):
 				# (no) grade messyness in relation to max_offshore_wind_speed
 
 def calculate_effective_power(P, theta):
-    """Calculate the effective power of the wave hitting the beach at an angle."""
-    P_eff = P * math.cos(math.radians(theta))
-    return P_eff
+	# Calculate the effective power of the wave hitting the beach at an angle.
+	try:
+		P = float(P)
+		theta = float(theta)
+		if P < 0:
+			raise ValueError("P must be a positive number.")
+		if abs(theta) > 360:
+			raise ValueError("Direction is in degrees and can not be greater"
+							 "than or less than +-360")
+		P_eff = P * math.cos(math.radians(theta))
+		return P_eff
+	except ValueError as e:
+		return f"ValueError: {e}"
+	except TypeError as e:
+		return f"TypeError: Invalid input type - {e}"
+	except Exception as e:
+		return f"An unexpected error occurred: {e}"
 
-# TODO give option to make it only return a positive integer			
 def get_relative_dir(primary_dir, secondary_dir):	
 	try:
 		secondary_dir = float(secondary_dir)
@@ -265,11 +278,10 @@ if __name__ == "__main__":
 		   latest_forcast['meta']['requestCount'])
 
 	current_time = arrow.now()
-	last_forcast_date = arrow.get(latest_forcast['hours'][3]['time']) # TODO:factor in daylight savings time
-	print("current_time.format('YYYY-MM-DD') : ",
-		  current_time.format('YYYY-MM-DD'),
-		  "last_forcast_date.format('YYYY-MM-DD') : ",
-		  last_forcast_date.format('YYYY-MM-DD'))
+	
+	last_forcast_date = arrow.get(latest_forcast['hours'][3]['time']) 
+	#TODO:factor in daylight savings timei and time zones
+	
 	if current_time.format('YYYY-MM-DD') != last_forcast_date.format('YYYY-MM-DD'):
 		print("current time != last forcast")
 		latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY,
