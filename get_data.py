@@ -90,8 +90,17 @@ class Surf_Break_Config:
 		except FileNotFoundError:
 			print("Configuration file not found. Using default settings.")
 
+	def print_class_details(obj):
+		# Print class name
+		print(f"Class: {obj.__class__.__name__}")
+
+    	# Print instance attributes
+		print("\nAttributes:")
+		for attr, value in vars(obj).items():
+			print(f"{attr}: {value}")
+
 class Surf_Break_Conditions:
-	def __init__(self, name=None, lat=None, long=None, time=None, date=None,
+	def __init__(self, name=None, lat=None, long=None, time=None,
 				 primary_wave_energy=None, secondary_wave_energy=None,
 				 combined_wave_energy=None, relative_swell_direction=None,
 				 effective_power=None, relative_wind_direction=None):
@@ -99,13 +108,21 @@ class Surf_Break_Conditions:
 		self.lat = lat
 		self.long = long
 		self.time = time
-		self.date = date
 		self.primary_wave_energy = primary_wave_energy
 		self.secondry_wave_energy = secondary_wave_energy
 		self.combined_wave_energy = combined_wave_energy
 		self.relative_swell_direction = relative_swell_direction
 		self.effective_power = effective_power
 		self.relative_wind_direction = relative_wind_direction
+
+	def print_class_details(obj):
+		# Print class name
+		print(f"Class: {obj.__class__.__name__}")
+
+    	# Print instance attributes
+		print("\nAttributes:")
+		for attr, value in vars(obj).items():
+			print(f"{attr}: {value}")
 
 # check_surf_at_spot() 
 	# store surf break name, lat and long, time/date in the data storge
@@ -115,15 +132,21 @@ class Surf_Break_Conditions:
 def process_forcast(spot_conf, forcast, spot_conditions):
 	primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
 										  float(forcast['hours'][0]['swellHeight']['noaa']))
+	print("--- secondary wave energy ---")
 	secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
 										    float(forcast['hours'][0]['secondarySwellHeight']['noaa']))
-	combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
-												    secondary_wave_energy)
-	combined_swell_direction = get_relatice_direction(forcast['hours'][0]['swellDirection']['noaa'],
+	combined_swell_direction = get_relative_direction(forcast['hours'][0]['swellDirection']['noaa'],
 													  forcast['hours'][0]['secondarySwellDirection']['noaa'])
+	combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
+												    secondary_wave_energy,
+													combined_swell_direction)
 	relative_swell_direction = get_relative_direction(spot_conf.break_direction, combined_swell_direction)
 	effective_power = calculate_effective_power(combined_wave_energy, relative_swell_direction)
 	
+	spot_conditions.name = spot_conf.name
+	spot_conditions.lat = spot_conf.latitude
+	spot_conditions.long = spot_conf.longitude
+	spot_conditions.time = arrow.now()
 	spot_conditions.primary_wave_energy = primary_wave_energy
 	spot_conditions.secondary_wave_energy = secondary_wave_energy
 	spot_conditions.combined_wave_energy = combined_wave_energy
@@ -148,7 +171,7 @@ def calculate_effective_power(P, theta):
 
 # TODO give option to make it only return a positive integer			
 def get_relative_direction(primary_direction, secondary_direction):	
-	result = secondary_direction - primary_diresction
+	result = secondary_direction - primary_direction
 	return result
 
 def get_wave_energy(swell_period, swell_height):
@@ -158,7 +181,7 @@ def get_wave_energy(swell_period, swell_height):
 
 def get_combined_wave_energy(e_1, e_2, relative_direction):
 	relative_direction_radians = math.radians(relative_direction)
-	combined_wave_energy = e_1 + e_2 + math.sqrt(e_1 * e_2) * math.cos(relative_energy_radians)
+	combined_wave_energy = e_1 + e_2 + math.sqrt(e_1 * e_2) * math.cos(relative_direction_radians)
 	return combined_wave_energy
 
 # function that returns the tide hight when given a location
@@ -187,31 +210,50 @@ if __name__ == "__main__":
 	whitesands_conditions = Surf_Break_Conditions()
 
 	# get latest forcast
-	
-	file_path = "./data.json"
+
+	file_path = "./forcast.json"
 	with open(file_path, 'r') as file:
 		latest_forcast = json.load(file)
 
+	print("latest_forcast['meta']['requestCount'] : ",
+		   latest_forcast['meta']['requestCount'])
+
 	current_time = arrow.now()
-	last_forcast_time = arrow.get(latest_forcast['hours'][0]['time'])
-	if current_time.format('YYYY-MM-DD') != last_forcast_time.format('YYYY-MM-DD'):
-		liatest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY,
+	last_forcast_date = arrow.get(latest_forcast['hours'][3]['time']) # TODO:factor in daylight savings time
+	print("current_time.format('YYYY-MM-DD') : ",
+		  current_time.format('YYYY-MM-DD'),
+		  "last_forcast_date.format('YYYY-MM-DD') : ",
+		  last_forcast_date.format('YYYY-MM-DD'))
+	if current_time.format('YYYY-MM-DD') != last_forcast_date.format('YYYY-MM-DD'):
+		print("current time != last forcast")
+		latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY,
 											  TIME_AT_END_OF_DAY,
 											  whitesands_conf.latitude,
 											  whitesands_conf.longitude,
 											  API_KEY)
-		latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY,
-								  whitesands_conf.latitude,
-								  whitesands_conf.longitude, API_KEY)
+		#latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY,
+	#							  whitesands_conf.latitude,
+#								  whitesands_conf.longitude, API_KEY)
+		if 'errors' not in latest_forcast:
+			with open('forcast.json', 'w') as json_file:
+				json.dump(latest_forcast, json_file, indent=4)
 
-		# save forcast (for debuggin and later for archiving)
-		with open('forcast.json', 'w') as json_file:
-			json.dump(latest_forcast, json_file, indent=4)
+		#if 'errors' not in latest_tides:
+	#		with open('tide.json', 'w') as json_file:
+#				json.dump(latest_tides, json_file, indent=4)
 
-		# save tide (for debuggin and later for archiving)
-		with open('tide.json', 'w') as json_file:
-			json.dump(latest_tides, json_file, indent=4)
-	
+		print("--- fetched new forcast ---")
+
 	# process forcast
 	process_forcast(whitesands_conf, latest_forcast, whitesands_conditions)
 
+	# print everything for debugging
+	print(json.dumps(latest_forcast['hours'][0], indent=4))
+	whitesands_conf.print_class_details()
+	whitesands_conditions.print_class_details()
+
+	# get check surf at spot
+
+	# get the prefered tyde times
+
+	# send notification
