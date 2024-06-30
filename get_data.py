@@ -132,16 +132,15 @@ class Surf_Break_Conditions:
 def process_forcast(spot_conf, forcast, spot_conditions):
 	primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
 										  float(forcast['hours'][0]['swellHeight']['noaa']))
-	print("--- secondary wave energy ---")
 	secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
 										    float(forcast['hours'][0]['secondarySwellHeight']['noaa']))
-	combined_swell_direction = get_relative_direction(forcast['hours'][0]['swellDirection']['noaa'],
+	combined_swell_dir = get_relative_dir(forcast['hours'][0]['swellDirection']['noaa'],
 													  forcast['hours'][0]['secondarySwellDirection']['noaa'])
 	combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
 												    secondary_wave_energy,
-													combined_swell_direction)
-	relative_swell_direction = get_relative_direction(spot_conf.break_direction, combined_swell_direction)
-	effective_power = calculate_effective_power(combined_wave_energy, relative_swell_direction)
+													combined_swell_dir)
+	relative_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
+	effective_power = calculate_effective_power(combined_wave_energy, relative_swell_dir)
 	
 	spot_conditions.name = spot_conf.name
 	spot_conditions.lat = spot_conf.latitude
@@ -150,8 +149,8 @@ def process_forcast(spot_conf, forcast, spot_conditions):
 	spot_conditions.primary_wave_energy = primary_wave_energy
 	spot_conditions.secondary_wave_energy = secondary_wave_energy
 	spot_conditions.combined_wave_energy = combined_wave_energy
-	spot_conditions.combined_swell_direction = combined_swell_direction
-	spot_conditions.relative_swell_direction = relative_swell_direction
+	spot_conditions.combined_swell_dir = combined_swell_dir
+	spot_conditions.relative_swell_dir = relative_swell_dir
 	spot_conditions.effective_power = effective_power
 
 # is it clean func
@@ -170,19 +169,66 @@ def calculate_effective_power(P, theta):
     return P_eff
 
 # TODO give option to make it only return a positive integer			
-def get_relative_direction(primary_direction, secondary_direction):	
-	result = secondary_direction - primary_direction
-	return result
+def get_relative_dir(primary_dir, secondary_dir):	
+	try:
+		secondary_dir = float(secondary_dir)
+		primary_dir = float(primary_dir)
+
+		if abs(primary_dir) > 360 or abs(secondary_dir) > 360:
+			raise ValueError("Direction is in degrees and can not be greater"
+							 "than or less than +-360")
+		result = secondary_dir - primary_dir
+		return result
+	except ValueError as e:
+		return f"ValueError: {e}"
+	except TypeError as e:
+		return f"TypeError: Invalid input type - {e}"
+	except Exception as e:
+		return f"An unexpected error occurred: {e}"
 
 def get_wave_energy(swell_period, swell_height):
-	swell_frequency = 1/swell_period
-	wave_energy = swell_frequency * swell_height
-	return wave_energy
+	try:
+		swell_period = float(swell_period)
+		swell_height = float(swell_height)
 
-def get_combined_wave_energy(e_1, e_2, relative_direction):
-	relative_direction_radians = math.radians(relative_direction)
-	combined_wave_energy = e_1 + e_2 + math.sqrt(e_1 * e_2) * math.cos(relative_direction_radians)
-	return combined_wave_energy
+		if swell_period == 0:
+			raise ZeroDivisionError("Swell period cannot be zero.")
+
+		# Calculate wave energy
+		swell_frequency = 1 / swell_period
+		wave_energy = swell_frequency * swell_height
+
+		return wave_energy
+
+	except ZeroDivisionError as e:
+		return f"ValueError: {e}"
+	except TypeError as e:
+		return f"TypeError: Invalid input type - {e}"
+	except Exception as e:
+		return f"An unexpected error occurred: {e}"
+
+def get_combined_wave_energy(e_1, e_2, relative_dir):
+	try:
+		e_1 = float(e_1)
+		e_2 = float(e_2)
+		relative_dir = float(relative_dir)
+
+		if e_1 < 0 or e_2 < 0:
+			raise ValueError("e_1 and e_1 both need to be positive numbers")
+		if abs(relative_dir) > 360:
+			raise ValueError("relative_dir is in degrees and can not be greater"
+							 "than or less than +-360")
+		relative_dir_radians = math.radians(relative_dir)
+		combined_wave_energy = e_1 + e_2 + math.sqrt(e_1 * e_2) * math.cos(relative_dir_radians)
+
+		return combined_wave_energy
+
+	except ValueError as e:
+		return f"ValueError: {e}"
+	except TypeError as e:
+		return f"TypeError: Invalid input type - {e}"
+	except Exception as e:
+		return f"An unexpected error occurred: {e}"
 
 # function that returns the tide hight when given a location
 
