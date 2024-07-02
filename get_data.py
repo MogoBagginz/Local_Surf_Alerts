@@ -59,17 +59,17 @@ def fetch_tide(start_time, end_time, lat, lng, api_key):
 class Surf_Break_Config:
 	def __init__(self, name='Default name', latitude=None, longitude=None,
 				 break_direction=None,ideal_swell_direction=225,
-				 min_swell_height=1, min_swell_period=7, max_wind_speed=30):
-		self.name 					= name
-		self.latitude				= latitude
-		self.longitude				= longitude
+				 min_wave_energy=6, max_onshore_wind_speed=20,
+				 max_offshore_wind_speed=30):
+		self.name 						= name
+		self.latitude					= latitude
+		self.longitude					= longitude
 		# break_direction = the angle that the beach or reef break faces in degrees
-		self.break_direction 		= break_direction
-		self.ideal_swell_direction 	= ideal_swell_direction
-		self.min_swell_height 		= min_swell_height
-		self.min_swell_period 		= min_swell_period
-		self.max_wind_speed 		= max_wind_speed
-		self.max_wind_speed 		= max_wind_speed
+		self.break_direction 			= break_direction
+		self.ideal_swell_direction 		= ideal_swell_direction
+		self.min_wave_energy 			= min_wave_energy
+		self.max_onshore_wind_speed 	= max_onshore_wind_speed
+		self.max_offshore_wind_speed 	= max_offshore_wind_speed
 
 	def save_to_file(self, file_path):
 		with open(file_path, 'w') as file:
@@ -79,14 +79,14 @@ class Surf_Break_Config:
 		try:
 			with open(file_path, 'r') as file:
 				data = json.load(file)
-				self.name 					= data['name']
-				self.latitude				= data['latitude']
-				self.longitude				= data['longitude']
-				self.break_direction 		= data['break_direction']
-				self.ideal_swell_direction 	= data['ideal_swell_direction']
-				self.min_swell_height 		= data['min_swell_height']
-				self.min_swell_period 		= data['min_swell_period']
-				self.max_wind_speed 		= data['max_wind_speed']
+				self.name 						= data['name']
+				self.latitude					= data['latitude']
+				self.longitude					= data['longitude']
+				self.break_direction 			= data['break_direction']
+				self.ideal_swell_direction 		= data['ideal_swell_direction']
+				self.min_wave_energy 			= data['min_wave_energy']
+				self.max_onshore_wind_speed 	= data['max_onshore_wind_speed']
+				self.max_offshore_wind_speed 	= data['max_offshore_wind_speed']
 		except FileNotFoundError:
 			print("Configuration file not found. Using default settings.")
 
@@ -102,18 +102,23 @@ class Surf_Break_Config:
 class Surf_Break_Conditions:
 	def __init__(self, name=None, lat=None, long=None, time=None,
 				 primary_wave_energy=None, secondary_wave_energy=None,
-				 combined_wave_energy=None, relative_swell_direction=None,
-				 effective_power=None, relative_wind_direction=None):
+				 combined_wave_energy=None, rel_swell_dir=None,
+				 effective_power=None, rel_wind_dir=None,
+				 messiness_wind=None, messiness_swell=None,
+				 messiness_total=None):
 		self.name = name
 		self.lat = lat
 		self.long = long
 		self.time = time
 		self.primary_wave_energy = primary_wave_energy
-		self.secondry_wave_energy = secondary_wave_energy
+		self.secondary_wave_energy = secondary_wave_energy
 		self.combined_wave_energy = combined_wave_energy
-		self.relative_swell_direction = relative_swell_direction
+		self.rel_swell_dir = rel_swell_dir
 		self.effective_power = effective_power
-		self.relative_wind_direction = relative_wind_direction
+		self.rel_wind_dir = rel_wind_dir#TODO fix directions,account for the fact that -200 = 160
+		self.messiness_wind = messiness_wind
+		self.messiness_swell = messiness_swell
+		self.messiness_total = messiness_total
 
 	def print_class_details(obj):
 		# Print class name
@@ -124,14 +129,14 @@ class Surf_Break_Conditions:
 		for attr, value in vars(obj).items():
 			print(f"{attr}: {value}")
 
-def check_surf_at_spot(spot_conf, spot_conditions) 
-	if spot_conditions.effective_power >= spot_conf.min_effective_power \
+def check_surf_at_spot(spot_conf, spot_conditions): 
+	if spot_conditions.effective_power >= spot_conf.min_wave_energy \
 	and spot_conditions.messiness < 100:
 		return True 
 	else:
 		return False
 
-def process_forcast(spot_conf, forcast, spot_conditions):
+def process_forcast(spot_conf, forcast, spot_conditions):#TODO just pass in break_direction instead of entir spot_conf
 	primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
 										  float(forcast['hours'][0]['swellHeight']['noaa']))
 	secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
@@ -141,10 +146,11 @@ def process_forcast(spot_conf, forcast, spot_conditions):
 	combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
 												    secondary_wave_energy,
 													combined_swell_dir)
-	relative_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
-	effective_power = calculate_effective_power(combined_wave_energy, relative_swell_dir)
-	#TODO add messiness calulation
-	#TODO calculate min_effective_power
+	rel_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
+	effective_power = calculate_effective_power(combined_wave_energy, rel_swell_dir)
+	rel_wind_dir = get_relative_dir(spot_conf.break_direction,
+									forcast['hours'][0]['windSpeed']['noaa'])
+	spot_conditions.rel_wind_dir = rel_wind_dir
 	spot_conditions.name = spot_conf.name
 	spot_conditions.lat = spot_conf.latitude
 	spot_conditions.long = spot_conf.longitude
@@ -152,8 +158,8 @@ def process_forcast(spot_conf, forcast, spot_conditions):
 	spot_conditions.primary_wave_energy = primary_wave_energy
 	spot_conditions.secondary_wave_energy = secondary_wave_energy
 	spot_conditions.combined_wave_energy = combined_wave_energy
-	spot_conditions.combined_swell_dir = combined_swell_dir
-	spot_conditions.relative_swell_dir = relative_swell_dir
+	spot_conditions.combined_swell_dir = combined_swell_dir# TODO fix, add difference to the smalled number
+	spot_conditions.rel_swell_dir = rel_swell_dir
 	spot_conditions.effective_power = effective_power
 
 def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
@@ -161,7 +167,7 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 	wave_e_2 = spot_conditions.secondary_wave_energy
 	# - check if the swell make it messy -
 	if check_relatively_equal(wave_e_1, wave_e_2) \
-	and abs(spot_conditions.relative_swell_dir) > 30:
+	and abs(spot_conditions.rel_swell_dir) > 30:
 		# divide the higher by the lower and turn into percentage
 		if wave_e_1 > wave_e_2:
 			swell_messiness =  (wave_e_1 / wave_e_2) * 100
@@ -169,16 +175,19 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 			swell_messiness =  (wave_e_2 / wave_e_1) * 100
 
 	# - check if the wind make it massy -
-	rel_wind_dir = get_relative_dir(spot_conf.break_direction,
-									wind_speed)
-	if abs(rel_wind_dir) >= 180: # offshore
+	if abs(spot_conditions.rel_wind_dir) >= 180: # offshore
 			wind_messiness = (wind_speed / spot_conf.max_offshore_wind_speed) *	100
-	else: # onshore TODO add max onshore and offshore to spot_conf
+	else:
 			wind_messiness = (wind_speed / spot_conf.max_onshore_wind_speed) *	100
-	return swell_messiness + wind_messiness
 
-def check_relatively_equal(a, b, rel_tolerance=0.5):
-	return abs(a - b) <= max(rel_tol)
+	spot_conditions.messiness_wind = wind_messiness
+	spot_conditions.messiness_swell = swell_messiness
+	spot_conditions.messiness_total = wind_messiness + swell_messiness
+
+	return spot_conditions.messiness_total
+
+def check_relatively_equal(a, b, rel_tol=0.5):
+	return abs(a - b) <= rel_tol
 
 def calculate_effective_power(P, theta):
 	# Calculate the effective power of the wave hitting the beach at an angle.
@@ -206,12 +215,12 @@ def get_wave_energy(swell_period, swell_height):
 	swell_period = float(swell_period)
 	swell_height = float(swell_height)
 
-	if swell_period == 0:
-		raise ZeroDivisionError("Swell period cannot be zero.")
-
 	# Calculate wave energy
-	swell_frequency = 1 / swell_period
-	wave_energy = swell_frequency * swell_height
+	if swell_period == 0:
+		wave_energy = 0
+	else:
+		swell_frequency = 1 / swell_period
+		wave_energy = swell_frequency * swell_height
 
 	return wave_energy
 
@@ -247,9 +256,9 @@ if __name__ == "__main__":
 	whitesands_conf.longitude = -5.2977
 	whitesands_conf.break_direction = 270
 	whitesands_conf.ideal_swell_direction = 270
-	whitesands_conf.min_swell_height = 1
-	whitesands_conf.min_swell_period = 7
-	whitesands_conf.max_wind_speed = 30
+	whitesands_conf.min_wave_energy = 6
+	whitesands_conf.max_offshore_wind_speed = 30
+	whitesands_conf.max_onshore_wind_speed = 20
 	whitesands_conf.save_to_file('whitesands_conf.json')
 
 	# spot conditions
@@ -291,6 +300,8 @@ if __name__ == "__main__":
 
 	# process forcast
 	process_forcast(whitesands_conf, latest_forcast, whitesands_conditions)
+	check_surf_cleanliness(whitesands_conf, whitesands_conditions,
+						   latest_forcast['hours'][0]['windSpeed']['noaa'])
 
 	# print everything for debugging
 	print(json.dumps(latest_forcast['hours'][0], indent=4))
@@ -298,6 +309,8 @@ if __name__ == "__main__":
 	whitesands_conditions.print_class_details()
 
 	# get check surf at spot
+	if check_surf_at_spot(whitesands_conf, whitesands_conditions):
+		print("Surfs up bro!!! Whitesands has surf!!!")
 
 	# get the prefered tyde times
 
