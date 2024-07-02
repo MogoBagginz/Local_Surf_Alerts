@@ -124,10 +124,12 @@ class Surf_Break_Conditions:
 		for attr, value in vars(obj).items():
 			print(f"{attr}: {value}")
 
-# check_surf_at_spot() 
-	# store surf break name, lat and long, time/date in the data storge
-	# -- is there spell --
-	# -- is it clean --
+def check_surf_at_spot(spot_conf, spot_conditions) 
+	if spot_conditions.effective_power >= spot_conf.min_effective_power \
+	and spot_conditions.messiness < 100:
+		return True 
+	else:
+		return False
 
 def process_forcast(spot_conf, forcast, spot_conditions):
 	primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
@@ -141,7 +143,8 @@ def process_forcast(spot_conf, forcast, spot_conditions):
 													combined_swell_dir)
 	relative_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
 	effective_power = calculate_effective_power(combined_wave_energy, relative_swell_dir)
-	
+	#TODO add messiness calulation
+	#TODO calculate min_effective_power
 	spot_conditions.name = spot_conf.name
 	spot_conditions.lat = spot_conf.latitude
 	spot_conditions.long = spot_conf.longitude
@@ -158,7 +161,7 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 	wave_e_2 = spot_conditions.secondary_wave_energy
 	# - check if the swell make it messy -
 	if check_relatively_equal(wave_e_1, wave_e_2) \
-							and abs(spot_conditions.relative_swell_dir) > 30:
+	and abs(spot_conditions.relative_swell_dir) > 30:
 		# divide the higher by the lower and turn into percentage
 		if wave_e_1 > wave_e_2:
 			swell_messiness =  (wave_e_1 / wave_e_2) * 100
@@ -170,7 +173,7 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 									wind_speed)
 	if abs(rel_wind_dir) >= 180: # offshore
 			wind_messiness = (wind_speed / spot_conf.max_offshore_wind_speed) *	100
-	else: # onshore
+	else: # onshore TODO add max onshore and offshore to spot_conf
 			wind_messiness = (wind_speed / spot_conf.max_onshore_wind_speed) *	100
 	return swell_messiness + wind_messiness
 
