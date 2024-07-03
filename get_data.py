@@ -11,6 +11,7 @@ API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac1300
 
 # TODO: get sunrise and sunset times and only get forcasts for these times
 # TODO get forcast for the next 7 days in one request if possible 
+# TODO either average out the data providers (e.g. NOAA) or select the best one
 
 # Get first hour of today
 TIME_AT_START_OF_DAY = arrow.now().floor('day')
@@ -115,7 +116,7 @@ class Surf_Break_Conditions:
 		self.combined_wave_energy = combined_wave_energy
 		self.rel_swell_dir = rel_swell_dir
 		self.effective_power = effective_power
-		self.rel_wind_dir = rel_wind_dir#TODO fix directions,account for the fact that -200 = 160
+		self.rel_wind_dir = rel_wind_dir
 		self.messiness_wind = messiness_wind
 		self.messiness_swell = messiness_swell
 		self.messiness_total = messiness_total
@@ -136,7 +137,7 @@ def check_surf_at_spot(spot_conf, spot_conditions):
 	else:
 		return False
 
-def process_forcast(spot_conf, forcast, spot_conditions):#TODO just pass in break_direction instead of entir spot_conf
+def process_forcast(spot_conf, forcast, spot_conditions):
 	primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
 										  float(forcast['hours'][0]['swellHeight']['noaa']))
 	secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
@@ -158,7 +159,7 @@ def process_forcast(spot_conf, forcast, spot_conditions):#TODO just pass in brea
 	spot_conditions.primary_wave_energy = primary_wave_energy
 	spot_conditions.secondary_wave_energy = secondary_wave_energy
 	spot_conditions.combined_wave_energy = combined_wave_energy
-	spot_conditions.combined_swell_dir = combined_swell_dir# TODO fix, add difference to the smalled number
+	spot_conditions.combined_swell_dir = combined_swell_dir
 	spot_conditions.rel_swell_dir = rel_swell_dir
 	spot_conditions.effective_power = effective_power
 
@@ -256,6 +257,7 @@ def get_combined_wave_energy(e_1, e_2, relative_dir):
 
 # function that sends notification
 
+# TODO make a widget
 
 if __name__ == "__main__":
 	
@@ -287,7 +289,7 @@ if __name__ == "__main__":
 	current_time = arrow.now()
 	
 	last_forcast_date = arrow.get(latest_forcast['hours'][3]['time']) 
-	#TODO:factor in daylight savings timei and time zones
+	#TODO:factor in daylight savings time and time zones
 	
 	if current_time.format('YYYY-MM-DD') != last_forcast_date.format('YYYY-MM-DD'):
 		print("current time != last forcast")
@@ -299,7 +301,7 @@ if __name__ == "__main__":
 		#latest_tides = fetch_tide(TIME_AT_START_OF_DAY, TIME_AT_END_OF_DAY,
 	#							  whitesands_conf.latitude,
 #								  whitesands_conf.longitude, API_KEY)
-		if 'errors' not in latest_forcast:
+		if 'errors' not in latest_forcast:#TODO add to a historical forcasts file/list 
 			with open('forcast.json', 'w') as json_file:
 				json.dump(latest_forcast, json_file, indent=4)
 
