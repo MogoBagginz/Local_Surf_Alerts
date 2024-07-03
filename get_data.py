@@ -59,7 +59,7 @@ def fetch_tide(start_time, end_time, lat, lng, api_key):
 class Surf_Break_Config:
 	def __init__(self, name='Default name', latitude=None, longitude=None,
 				 break_direction=None,ideal_swell_direction=225,
-				 min_wave_energy=6, max_onshore_wind_speed=20,
+				 min_wave_energy=0.43, max_onshore_wind_speed=20,
 				 max_offshore_wind_speed=30):
 		self.name 						= name
 		self.latitude					= latitude
@@ -149,7 +149,7 @@ def process_forcast(spot_conf, forcast, spot_conditions):#TODO just pass in brea
 	rel_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
 	effective_power = calculate_effective_power(combined_wave_energy, rel_swell_dir)
 	rel_wind_dir = get_relative_dir(spot_conf.break_direction,
-									forcast['hours'][0]['windSpeed']['noaa'])
+									forcast['hours'][0]['windDirection']['noaa'])
 	spot_conditions.rel_wind_dir = rel_wind_dir
 	spot_conditions.name = spot_conf.name
 	spot_conditions.lat = spot_conf.latitude
@@ -165,6 +165,7 @@ def process_forcast(spot_conf, forcast, spot_conditions):#TODO just pass in brea
 def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 	wave_e_1 = spot_conditions.primary_wave_energy
 	wave_e_2 = spot_conditions.secondary_wave_energy
+
 	# - check if the swell make it messy -
 	if check_relatively_equal(wave_e_1, wave_e_2) \
 	and abs(spot_conditions.rel_swell_dir) > 30:
@@ -173,7 +174,9 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 			swell_messiness =  (wave_e_1 / wave_e_2) * 100
 		else:
 			swell_messiness =  (wave_e_2 / wave_e_1) * 100
-
+	else:
+		swell_messiness = 0
+	
 	# - check if the wind make it massy -
 	if abs(spot_conditions.rel_wind_dir) >= 180: # offshore
 			wind_messiness = (wind_speed / spot_conf.max_offshore_wind_speed) *	100
@@ -201,28 +204,36 @@ def calculate_effective_power(P, theta):
 	P_eff = P * math.cos(math.radians(theta))
 	return P_eff
 
+def normalize_angle(angle):
+	return angle % 360
+
 def get_relative_dir(primary_dir, secondary_dir):	
-	secondary_dir = float(secondary_dir)
-	primary_dir = float(primary_dir)
+	secondary_dir = normalize_angle(secondary_dir)
+	primary_dir = normalize_angle(primary_dir)
 
-	if abs(primary_dir) > 360 or abs(secondary_dir) > 360:
-		raise ValueError("Direction is in degrees and can not be greater"
-						 "than or less than +-360")
-	result = secondary_dir - primary_dir
-	return result
+	relative_angle = secondary_dir - primary_dir
+	
+	if relative_angle < -180: 
+		relative_angle += 360
+	elif relative_angle >= 180:
+	 	relative_angle -= 360
 
-def get_wave_energy(swell_period, swell_height):
-	swell_period = float(swell_period)
-	swell_height = float(swell_height)
+	return relative_angle
 
-	# Calculate wave energy
-	if swell_period == 0:
-		wave_energy = 0
-	else:
-		swell_frequency = 1 / swell_period
-		wave_energy = swell_frequency * swell_height
+def get_wave_energy(period, height):
+	# https://techiescience.com/how-to-calculate-wave-energy-in-ocean-engineering/
+	# Wave energy density calculated using linear wave theory
+	# args: height = from top of crest to bottom of trough
+	# returns energy_density = kJ/m^2
+	water_density = 1025 #kg/m^3
+	gravity = 9.8 #m/s^2
+	
+	period = float(period)
+	height = float(height)
 
-	return wave_energy
+	energy_density = 1 / 8 * water_density * gravity * height**2 * period
+
+	return energy_density
 
 def get_combined_wave_energy(e_1, e_2, relative_dir):
 	e_1 = float(e_1)
@@ -256,7 +267,7 @@ if __name__ == "__main__":
 	whitesands_conf.longitude = -5.2977
 	whitesands_conf.break_direction = 270
 	whitesands_conf.ideal_swell_direction = 270
-	whitesands_conf.min_wave_energy = 6
+	whitesands_conf.min_wave_energy = get_wave_energy(7,0.3)
 	whitesands_conf.max_offshore_wind_speed = 30
 	whitesands_conf.max_onshore_wind_speed = 20
 	whitesands_conf.save_to_file('whitesands_conf.json')
