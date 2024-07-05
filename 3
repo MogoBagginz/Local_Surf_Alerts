@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import fetch_forcast
 import math
 import arrow
 import requests
@@ -16,44 +17,44 @@ API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac1300
 # TODO either average out the data providers (e.g. NOAA) or select the best one
 
 # Get first hour of today
-TIME_AT_START_OF_DAY = arrow.now().floor('day')
+#TIME_AT_START_OF_DAY = arrow.now().floor('day')
 
 # Get last hour of today
-TIME_AT_END_OF_DAY = arrow.now().ceil('day')
+#TIME_AT_END_OF_DAY = arrow.now().ceil('day')
 
-def fetch_surf_forecast(start_time, end_time, lat, lng, api_key):
-    response = requests.get(
-        'https://api.stormglass.io/v2/weather/point',
-        params={
-            'lat': lat,
-            'lng': lng,
-            'params': ','.join(['swellDirection', 'swellHeight', 'swellPeriod',
-                                'secondarySwellDirection',
-                                'secondarySwellHeight', 'secondarySwellPeriod',
-                                'windDirection', 'windSpeed']),
-            'start': start_time.to('UTC').timestamp(),  # Convert to UTC timestamp
-            'end': end_time.to('UTC').timestamp()  # Convert to UTC timestamp
-        },
-        headers={
-            'Authorization': api_key
-        }
-    )
-    return response.json()
-
-def fetch_tide(start_time, end_time, lat, lng, api_key):
-    responce = requests.get(
-        'https://api.stormglass.io/v2/tide/extremes/point',
-        params={
-            'lat': lat,
-            'lng': lng,
-            'start': start_time.to('UTC').timestamp(), # Convert to UTC timestamp
-            'end': end_time.to('UTC').timestamp() # Convert to UTC timestamp
-        },
-        headers={
-            'Authorization': api_key
-        }
-    )
-    return responce.json()
+#def fetch_surf_forecast(start_time, end_time, lat, lng, api_key):
+#    response = requests.get(
+#        'https://api.stormglass.io/v2/weather/point',
+#        params={
+#            'lat': lat,
+#            'lng': lng,
+#            'params': ','.join(['swellDirection', 'swellHeight', 'swellPeriod',
+#                                'secondarySwellDirection',
+#                                'secondarySwellHeight', 'secondarySwellPeriod',
+#                                'windDirection', 'windSpeed']),
+#            'start': start_time.to('UTC').timestamp(),  # Convert to UTC timestamp
+#            'end': end_time.to('UTC').timestamp()  # Convert to UTC timestamp
+#        },
+#        headers={
+#            'Authorization': api_key
+#        }
+#    )
+#    return response.json()
+#
+#def fetch_tide(start_time, end_time, lat, lng, api_key):
+#    responce = requests.get(
+#        'https://api.stormglass.io/v2/tide/extremes/point',
+#        params={
+#            'lat': lat,
+#            'lng': lng,
+#            'start': start_time.to('UTC').timestamp(), # Convert to UTC timestamp
+#            'end': end_time.to('UTC').timestamp() # Convert to UTC timestamp
+#        },
+#        headers={
+#            'Authorization': api_key
+#        }
+#    )
+#    return responce.json()
 
 
 #TODO create function that creates a new surf_break_configuration
@@ -303,15 +304,14 @@ if __name__ == "__main__":
     with open(file_path, 'r') as file:
         latest_forcast = json.load(file)
 
-    print(f"latest_forcast['meta']['requestCount'] :" 
-           "{latest_forcast['meta']['requestCount']}")
+    print(f"latest_forcast['meta']['requestCount'] : {latest_forcast['meta']['requestCount']}")
 
     current_time = arrow.now() #TODO: USE DATETIME
     
     last_forcast_date = arrow.get(latest_forcast['hours'][3]['time']) 
     #TODO:factor in daylight savings time and time zones
     
-    if current_time.format('YYYY-MM-DD') != last_forcast_date.format('YYYY-MM-DD'):
+    if current_time.format('YYYY-MM-DD') == last_forcast_date.format('YYYY-MM-DD'):
         print("current time != last forcast")
         latest_forcast = fetch_surf_forecast(TIME_AT_START_OF_DAY,
                                               TIME_AT_END_OF_DAY,
@@ -351,3 +351,12 @@ if __name__ == "__main__":
 
         # send notification
         send_notification("SURF ALERT", "Surfs up bro!!!")
+
+# main (main purpose: 
+            # > check the surf conditions for n spots for the next n days.
+            # > Notify someone)
+    #process_forcast (purpose : > checks the surf conditions for one spot
+                             # for one time stamp)
+        #fetch_forcast (purpose: > fetches the forcast)
+    #spot_conf (purpose: > handles spot configurations)
+    #notify (purpose: > sends a notification to the user)
