@@ -3,10 +3,7 @@
 import spot_conf
 import process_forecast
 import fetch_forecast
-import notify
 import arrow
-#import datetime
-import pytz
 import json
 
 from plyer import notification
@@ -57,8 +54,6 @@ if __name__ == "__main__":
     print(json.dumps(latest_tides['data'], indent=4))
     print(whitesands_conf)
     print(whitesands_conditions)
-
-    # -- get the prefered tide times --
 
     # Get the current time in Germany (CET/CEST)
     time_now_germany = arrow.now('Europe/Berlin')

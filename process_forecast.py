@@ -170,14 +170,14 @@ def get_combined_wave_energy(e_1, e_2, relative_dir):
 
     return combined_wave_energy
 
-#TODO function that returns the tide hight when given a location
 def calculate_tide_height(tide_data, target_time):
     """
     Calculate the tide height at a given time from JSON tide data.
     
     Parameters:
     tide_data (dict): JSON object containing tide data.
-    target_time (str): Time at which to calculate the tide height in YYYY-MM-DDTHH:MM:SS+00:00 format.
+    target_time (str): Time at which to calculate the tide height in
+                       YYYY-MM-DDTHH:MM:SS+00:00 format.
     
     Returns:
     float: The calculated tide height at the given time.
