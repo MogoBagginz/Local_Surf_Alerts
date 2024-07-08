@@ -3,8 +3,8 @@
 """
 this class takes the spot config obj and a time stamp
 
-- fetch forcast
-- process forcast
+- fetch forecast
+- process forecast
 - create summary
 
 it returns a spot condition overview 
@@ -13,8 +13,9 @@ it returns a spot condition overview
 import math
 import arrow
 import json
+import datetime
 
-# TODO: get sunrise and sunset times and only get forcasts for these times
+# TODO: get sunrise and sunset times and only get forecasts for these times
 # TODO either average out the data providers (e.g. NOAA) or select the best one
 
 class Surf_Break_Conditions: #TODO think about removing the Nones
@@ -40,12 +41,12 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
     
     def __str__(self):
         # Print class name
-        rtnVal = f"\nClass: {self.__class__.__name__}\n\nAttributes:\n"
+        rtn_val = f"\nClass: {self.__class__.__name__}\n\nAttributes:\n"
 
         # Print instance attributes
         for attr, value in vars(self).items():
-            rtnVal += f"{attr}: {value}\n"
-        return rtnVal
+            rtn_val += f"{attr}: {value}\n"
+        return rtn_val
 
 def check_surf_at_spot(spot_conf, spot_conditions): 
     if spot_conditions.effective_power >= spot_conf.min_wave_energy \
@@ -54,20 +55,20 @@ def check_surf_at_spot(spot_conf, spot_conditions):
     else:
         return False
 
-def process_forcast(spot_conf, forcast, spot_conditions):
-    primary_wave_energy = get_wave_energy(float(forcast['hours'][0]['swellPeriod']['noaa']),
-                                          float(forcast['hours'][0]['swellHeight']['noaa']))
-    secondary_wave_energy = get_wave_energy(float(forcast['hours'][0]['secondarySwellPeriod']['noaa']),
-                                            float(forcast['hours'][0]['secondarySwellHeight']['noaa']))
-    combined_swell_dir = get_relative_dir(forcast['hours'][0]['swellDirection']['noaa'],
-                                          forcast['hours'][0]['secondarySwellDirection']['noaa'])
+def process_forecast(spot_conf, forecast, spot_conditions):
+    primary_wave_energy = get_wave_energy(float(forecast['hours'][0]['swellPeriod']['noaa']),
+                                          float(forecast['hours'][0]['swellHeight']['noaa']))
+    secondary_wave_energy = get_wave_energy(float(forecast['hours'][0]['secondarySwellPeriod']['noaa']),
+                                            float(forecast['hours'][0]['secondarySwellHeight']['noaa']))
+    combined_swell_dir = get_relative_dir(forecast['hours'][0]['swellDirection']['noaa'],
+                                          forecast['hours'][0]['secondarySwellDirection']['noaa'])
     combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
                                                     secondary_wave_energy,
                                                     combined_swell_dir)
     rel_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
     effective_power = calculate_effective_power(combined_wave_energy, rel_swell_dir)
     rel_wind_dir = get_relative_dir(spot_conf.break_direction,
-                                    forcast['hours'][0]['windDirection']['noaa'])
+                                    forecast['hours'][0]['windDirection']['noaa'])
     spot_conditions.rel_wind_dir = rel_wind_dir
     spot_conditions.name = spot_conf.name
     spot_conditions.lat = spot_conf.latitude
@@ -107,7 +108,7 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
 
     return spot_conditions.messiness_total
 
-def check_relatively_equal(a, b, rel_tol=0.5):#TODO function unecesary
+def check_relatively_equal(a, b, rel_tol=0.5):
     return abs(a - b) <= rel_tol
 
 def calculate_effective_power(P, theta):
@@ -119,15 +120,16 @@ def calculate_effective_power(P, theta):
     if abs(theta) > 360:
         raise ValueError("Direction is in degrees and can not be greater"
                          "than or less than +-360")
-    P_eff = P * math.cos(math.radians(theta))
+    print(f"theta: {theta}\nmath.radians(theta): {math.radians(theta)}\n"
+          f"math.cos(math.radians(theta/2)): {math.cos(math.radians(theta/2))}\n"
+          f"P: {P}")
+    P_eff = P * abs(math.cos(math.radians(theta/2)))
     return P_eff
 
-def normalize_angle(angle):# TODO function unnecesary
-    return angle % 360
-
-def get_relative_dir(primary_dir, secondary_dir):   
-    secondary_dir = normalize_angle(secondary_dir)
-    primary_dir = normalize_angle(primary_dir)
+def get_relative_dir(primary_dir, secondary_dir):
+    # normalize angles
+    secondary_dir = secondary_dir % 360
+    primary_dir = primary_dir % 360
 
     relative_angle = secondary_dir - primary_dir
     
@@ -168,15 +170,50 @@ def get_combined_wave_energy(e_1, e_2, relative_dir):
 
     return combined_wave_energy
 
-# function that returns the tide hight when given a location
+#TODO function that returns the tide hight when given a location
+def calculate_tide_height(tide_data, target_time):
+    """
+    Calculate the tide height at a given time from JSON tide data.
+    
+    Parameters:
+    tide_data (dict): JSON object containing tide data.
+    target_time (str): Time at which to calculate the tide height in YYYY-MM-DDTHH:MM:SS+00:00 format.
+    
+    Returns:
+    float: The calculated tide height at the given time.
+    """
+    # Extract tide data
+    high_tides = [item for item in tide_data['data'] if item['type'] == 'high']
+    low_tides = [item for item in tide_data['data'] if item['type'] == 'low']
+    
+    if not high_tides or not low_tides:
+        raise ValueError("Insufficient tide data in JSON.")
 
-def send_notification(title, message):
-    try:
-        notification.notify(
-            title=title,
-            message=message,
-            app_name='Your Application Name'
-        )
-        print("Notification sent successfully!")
-    except Exception as e:
-        print(f"Failed to send notification: {e}")
+    high_tide = high_tides[0]
+    low_tide = low_tides[0]
+
+    high_tide_height = high_tide['height']
+    high_tide_time = arrow.get(high_tide['time'])
+    
+    low_tide_height = low_tide['height']
+    low_tide_time = arrow.get(low_tide['time'])
+    
+    # Convert target_time
+    target_time = arrow.get(target_time)
+
+    # Calculate the average tide height
+    avg_tide_height = (high_tide_height + low_tide_height) / 2
+
+    # Calculate the tidal range (e.g. avg to high)
+    tidal_range = (high_tide_height - low_tide_height) / 2
+
+    tidal_period = 12.42
+
+    # Calculate the time difference in hours from the high tide time to the
+    # target time
+    delta_t = (target_time - high_tide_time).total_seconds() / 3600
+
+    # Calculate the tide height at the target time
+    tide_height = avg_tide_height + tidal_range * math.cos((2 * math.pi / tidal_period) * delta_t)
+
+    return tide_height

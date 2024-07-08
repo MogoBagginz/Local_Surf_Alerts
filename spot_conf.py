@@ -39,9 +39,9 @@ class Surf_Break_Config:
 
     def __str__(self):
         # Print class name
-        rtnVal = f"\nClass: {self.__class__.__name__}\n\nAttributes:\n"
+        rtn_val = f"\nClass: {self.__class__.__name__}\n\nAttributes:\n"
 
         # Print instance attributes
         for attr, value in vars(self).items():
-            rtnVal += f"{attr}: {value}\n"
-        return rtnVal
+            rtn_val += f"{attr}: {value}\n"
+        return rtn_val
