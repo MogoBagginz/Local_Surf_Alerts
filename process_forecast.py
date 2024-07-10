@@ -120,9 +120,6 @@ def calculate_effective_power(P, theta):
     if abs(theta) > 360:
         raise ValueError("Direction is in degrees and can not be greater"
                          "than or less than +-360")
-    print(f"theta: {theta}\nmath.radians(theta): {math.radians(theta)}\n"
-          f"math.cos(math.radians(theta/2)): {math.cos(math.radians(theta/2))}\n"
-          f"P: {P}")
     P_eff = P * abs(math.cos(math.radians(theta/2)))
     return P_eff
 

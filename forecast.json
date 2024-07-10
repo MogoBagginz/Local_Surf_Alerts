@@ -2,993 +2,993 @@
     "hours": [
         {
             "secondarySwellDirection": {
-                "noaa": 353.48,
-                "sg": 353.48
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.15,
-                "sg": 0.15
-            },
-            "secondarySwellPeriod": {
-                "noaa": 3.71,
-                "sg": 3.71
-            },
-            "swellDirection": {
-                "dwd": 243.52,
-                "meteo": 247.34,
-                "noaa": 240.7,
-                "sg": 247.34
-            },
-            "swellHeight": {
-                "dwd": 0.64,
-                "meteo": 0.32,
-                "noaa": 0.06,
-                "sg": 0.32
-            },
-            "swellPeriod": {
-                "dwd": 6.28,
-                "meteo": 4.48,
-                "noaa": 12.8,
-                "sg": 4.48
-            },
-            "time": "2024-07-07T22:00:00+00:00",
-            "windDirection": {
-                "noaa": 224.15,
-                "sg": 224.15
-            },
-            "windSpeed": {
-                "noaa": 3.39,
-                "sg": 3.39
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 354.04,
-                "sg": 354.04
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.13,
-                "sg": 0.13
-            },
-            "secondarySwellPeriod": {
-                "noaa": 3.64,
-                "sg": 3.64
-            },
-            "swellDirection": {
-                "dwd": 243.1,
-                "meteo": 246.94,
-                "noaa": 238.56,
-                "sg": 246.94
-            },
-            "swellHeight": {
-                "dwd": 0.63,
-                "meteo": 0.31,
-                "noaa": 0.06,
-                "sg": 0.31
-            },
-            "swellPeriod": {
-                "dwd": 6.24,
-                "meteo": 4.53,
-                "noaa": 12.77,
-                "sg": 4.53
-            },
-            "time": "2024-07-07T23:00:00+00:00",
-            "windDirection": {
-                "noaa": 220.13,
-                "sg": 220.13
-            },
-            "windSpeed": {
-                "noaa": 2.94,
-                "sg": 2.94
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 354.6,
-                "sg": 354.6
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.12,
-                "sg": 0.12
-            },
-            "secondarySwellPeriod": {
-                "noaa": 3.56,
-                "sg": 3.56
-            },
-            "swellDirection": {
-                "dwd": 242.73,
-                "meteo": 246.54,
-                "noaa": 236.42,
-                "sg": 246.54
-            },
-            "swellHeight": {
-                "dwd": 0.61,
-                "meteo": 0.3,
-                "noaa": 0.06,
-                "sg": 0.3
-            },
-            "swellPeriod": {
-                "dwd": 6.24,
-                "meteo": 4.58,
-                "noaa": 12.73,
-                "sg": 4.58
-            },
-            "time": "2024-07-08T00:00:00+00:00",
-            "windDirection": {
-                "noaa": 216.12,
-                "sg": 216.12
-            },
-            "windSpeed": {
-                "noaa": 2.5,
-                "sg": 2.5
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 355.55,
-                "sg": 355.55
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.11,
-                "sg": 0.11
-            },
-            "secondarySwellPeriod": {
-                "noaa": 3.51,
-                "sg": 3.51
-            },
-            "swellDirection": {
-                "dwd": 242.34,
-                "meteo": 246.33,
-                "noaa": 236.87,
-                "sg": 246.33
-            },
-            "swellHeight": {
-                "dwd": 0.6,
-                "meteo": 0.3,
-                "noaa": 0.06,
-                "sg": 0.3
-            },
-            "swellPeriod": {
-                "dwd": 6.23,
-                "meteo": 4.6,
-                "noaa": 12.68,
-                "sg": 4.6
-            },
-            "time": "2024-07-08T01:00:00+00:00",
-            "windDirection": {
-                "noaa": 216.06,
-                "sg": 216.06
-            },
-            "windSpeed": {
-                "noaa": 2.36,
-                "sg": 2.36
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 356.5,
-                "sg": 356.5
+                "noaa": 243.53,
+                "sg": 243.53
             },
             "secondarySwellHeight": {
                 "noaa": 0.1,
                 "sg": 0.1
             },
             "secondarySwellPeriod": {
-                "noaa": 3.46,
-                "sg": 3.46
+                "noaa": 10.98,
+                "sg": 10.98
             },
             "swellDirection": {
-                "dwd": 241.98,
-                "meteo": 246.13,
-                "noaa": 237.33,
-                "sg": 246.13
+                "dwd": 231.89,
+                "meteo": 281.8,
+                "noaa": 244.85,
+                "sg": 281.8
             },
             "swellHeight": {
-                "dwd": 0.59,
-                "meteo": 0.29,
+                "dwd": 0.35,
+                "meteo": 0.14,
                 "noaa": 0.07,
-                "sg": 0.29
+                "sg": 0.14
             },
             "swellPeriod": {
-                "dwd": 6.24,
-                "meteo": 4.61,
-                "noaa": 12.64,
-                "sg": 4.61
-            },
-            "time": "2024-07-08T02:00:00+00:00",
-            "windDirection": {
-                "noaa": 216.01,
-                "sg": 216.01
-            },
-            "windSpeed": {
-                "noaa": 2.21,
-                "sg": 2.21
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 357.45,
-                "sg": 357.45
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.09,
-                "sg": 0.09
-            },
-            "secondarySwellPeriod": {
-                "noaa": 3.41,
-                "sg": 3.41
-            },
-            "swellDirection": {
-                "dwd": 241.58,
-                "meteo": 245.92,
-                "noaa": 237.78,
-                "sg": 245.92
-            },
-            "swellHeight": {
-                "dwd": 0.58,
-                "meteo": 0.29,
-                "noaa": 0.07,
-                "sg": 0.29
-            },
-            "swellPeriod": {
-                "dwd": 6.25,
-                "meteo": 4.63,
-                "noaa": 12.59,
-                "sg": 4.63
-            },
-            "time": "2024-07-08T03:00:00+00:00",
-            "windDirection": {
-                "noaa": 215.95,
-                "sg": 215.95
-            },
-            "windSpeed": {
-                "noaa": 2.07,
-                "sg": 2.07
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 342.49,
-                "sg": 342.49
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.08,
-                "sg": 0.08
-            },
-            "secondarySwellPeriod": {
-                "noaa": 4.46,
-                "sg": 4.46
-            },
-            "swellDirection": {
-                "dwd": 241.15,
-                "meteo": 245.82,
-                "noaa": 257.85,
-                "sg": 245.82
-            },
-            "swellHeight": {
-                "dwd": 0.57,
-                "meteo": 0.28,
-                "noaa": 0.07,
-                "sg": 0.28
-            },
-            "swellPeriod": {
-                "dwd": 6.24,
-                "meteo": 4.63,
-                "noaa": 11.29,
-                "sg": 4.63
-            },
-            "time": "2024-07-08T04:00:00+00:00",
-            "windDirection": {
-                "noaa": 189.32,
-                "sg": 189.32
-            },
-            "windSpeed": {
-                "noaa": 2.54,
-                "sg": 2.54
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 327.53,
-                "sg": 327.53
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.08,
-                "sg": 0.08
-            },
-            "secondarySwellPeriod": {
-                "noaa": 5.5,
-                "sg": 5.5
-            },
-            "swellDirection": {
-                "dwd": 240.56,
-                "meteo": 245.71,
-                "noaa": 277.92,
-                "sg": 245.71
-            },
-            "swellHeight": {
-                "dwd": 0.56,
-                "meteo": 0.28,
-                "noaa": 0.06,
-                "sg": 0.28
-            },
-            "swellPeriod": {
-                "dwd": 6.22,
-                "meteo": 4.64,
-                "noaa": 10.0,
-                "sg": 4.64
-            },
-            "time": "2024-07-08T05:00:00+00:00",
-            "windDirection": {
-                "noaa": 162.68,
-                "sg": 162.68
-            },
-            "windSpeed": {
-                "noaa": 3.02,
-                "sg": 3.02
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 312.57,
-                "sg": 312.57
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.07,
-                "sg": 0.07
-            },
-            "secondarySwellPeriod": {
-                "noaa": 6.55,
-                "sg": 6.55
-            },
-            "swellDirection": {
-                "dwd": 239.82,
-                "meteo": 245.61,
-                "noaa": 297.99,
-                "sg": 245.61
-            },
-            "swellHeight": {
-                "dwd": 0.55,
-                "meteo": 0.27,
-                "noaa": 0.06,
-                "sg": 0.27
-            },
-            "swellPeriod": {
-                "dwd": 6.19,
-                "meteo": 4.64,
-                "noaa": 8.7,
-                "sg": 4.64
-            },
-            "time": "2024-07-08T06:00:00+00:00",
-            "windDirection": {
-                "noaa": 136.05,
-                "sg": 136.05
-            },
-            "windSpeed": {
-                "noaa": 3.49,
-                "sg": 3.49
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 291.69,
-                "sg": 291.69
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.07,
-                "sg": 0.07
-            },
-            "secondarySwellPeriod": {
-                "noaa": 7.92,
-                "sg": 7.92
-            },
-            "swellDirection": {
-                "dwd": 239.57,
-                "meteo": 245.53,
-                "noaa": 308.1,
-                "sg": 245.53
-            },
-            "swellHeight": {
-                "dwd": 0.54,
-                "meteo": 0.26,
-                "noaa": 0.06,
-                "sg": 0.26
-            },
-            "swellPeriod": {
-                "dwd": 6.21,
-                "meteo": 4.64,
-                "noaa": 9.29,
-                "sg": 4.64
-            },
-            "time": "2024-07-08T07:00:00+00:00",
-            "windDirection": {
-                "noaa": 129.82,
-                "sg": 129.82
-            },
-            "windSpeed": {
-                "noaa": 3.75,
-                "sg": 3.75
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 270.81,
-                "sg": 270.81
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.06,
-                "sg": 0.06
-            },
-            "secondarySwellPeriod": {
-                "noaa": 9.28,
-                "sg": 9.28
-            },
-            "swellDirection": {
-                "dwd": 239.36,
-                "meteo": 245.45,
-                "noaa": 318.2,
-                "sg": 245.45
-            },
-            "swellHeight": {
-                "dwd": 0.53,
-                "meteo": 0.26,
-                "noaa": 0.06,
-                "sg": 0.26
-            },
-            "swellPeriod": {
-                "dwd": 6.22,
-                "meteo": 4.64,
-                "noaa": 9.87,
-                "sg": 4.64
-            },
-            "time": "2024-07-08T08:00:00+00:00",
-            "windDirection": {
-                "noaa": 123.58,
-                "sg": 123.58
-            },
-            "windSpeed": {
-                "noaa": 4.02,
+                "dwd": 7.04,
+                "meteo": 4.02,
+                "noaa": 14.2,
                 "sg": 4.02
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 249.93,
-                "sg": 249.93
             },
-            "secondarySwellHeight": {
-                "noaa": 0.06,
-                "sg": 0.06
-            },
-            "secondarySwellPeriod": {
-                "noaa": 10.65,
-                "sg": 10.65
-            },
-            "swellDirection": {
-                "dwd": 239.37,
-                "meteo": 245.37,
-                "noaa": 328.31,
-                "sg": 245.37
-            },
-            "swellHeight": {
-                "dwd": 0.53,
-                "meteo": 0.25,
-                "noaa": 0.06,
-                "sg": 0.25
-            },
-            "swellPeriod": {
-                "dwd": 6.24,
-                "meteo": 4.64,
-                "noaa": 10.46,
-                "sg": 4.64
-            },
-            "time": "2024-07-08T09:00:00+00:00",
+            "time": "2024-07-08T22:00:00+00:00",
             "windDirection": {
-                "noaa": 117.35,
-                "sg": 117.35
+                "noaa": 79.46,
+                "sg": 79.46
             },
             "windSpeed": {
-                "noaa": 4.28,
-                "sg": 4.28
+                "noaa": 8.51,
+                "sg": 8.51
             }
         },
         {
             "secondarySwellDirection": {
-                "noaa": 245.41,
-                "sg": 245.41
+                "noaa": 245.5,
+                "sg": 245.5
             },
             "secondarySwellHeight": {
-                "noaa": 0.06,
-                "sg": 0.06
+                "noaa": 0.11,
+                "sg": 0.11
             },
             "secondarySwellPeriod": {
-                "noaa": 11.27,
-                "sg": 11.27
+                "noaa": 9.62,
+                "sg": 9.62
             },
             "swellDirection": {
-                "dwd": 239.31,
-                "meteo": 245.23,
-                "noaa": 299.11,
-                "sg": 245.23
+                "dwd": 227.99,
+                "meteo": 327.34,
+                "noaa": 245.02,
+                "sg": 327.34
             },
             "swellHeight": {
-                "dwd": 0.51,
-                "meteo": 0.24,
-                "noaa": 0.06,
-                "sg": 0.24
-            },
-            "swellPeriod": {
-                "dwd": 6.27,
-                "meteo": 4.63,
-                "noaa": 12.75,
-                "sg": 4.63
-            },
-            "time": "2024-07-08T10:00:00+00:00",
-            "windDirection": {
-                "noaa": 117.76,
-                "sg": 117.76
-            },
-            "windSpeed": {
-                "noaa": 3.87,
-                "sg": 3.87
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 240.9,
-                "sg": 240.9
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.06,
-                "sg": 0.06
-            },
-            "secondarySwellPeriod": {
-                "noaa": 11.88,
-                "sg": 11.88
-            },
-            "swellDirection": {
-                "dwd": 239.18,
-                "meteo": 245.08,
-                "noaa": 269.91,
-                "sg": 245.08
-            },
-            "swellHeight": {
-                "dwd": 0.5,
-                "meteo": 0.24,
-                "noaa": 0.06,
-                "sg": 0.24
-            },
-            "swellPeriod": {
-                "dwd": 6.29,
-                "meteo": 4.63,
-                "noaa": 15.03,
-                "sg": 4.63
-            },
-            "time": "2024-07-08T11:00:00+00:00",
-            "windDirection": {
-                "noaa": 118.17,
-                "sg": 118.17
-            },
-            "windSpeed": {
-                "noaa": 3.45,
-                "sg": 3.45
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 236.38,
-                "sg": 236.38
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.06,
-                "sg": 0.06
-            },
-            "secondarySwellPeriod": {
-                "noaa": 12.5,
-                "sg": 12.5
-            },
-            "swellDirection": {
-                "dwd": 239.01,
-                "meteo": 244.94,
-                "noaa": 240.71,
-                "sg": 244.94
-            },
-            "swellHeight": {
-                "dwd": 0.49,
-                "meteo": 0.23,
-                "noaa": 0.06,
-                "sg": 0.23
-            },
-            "swellPeriod": {
-                "dwd": 6.32,
-                "meteo": 4.62,
-                "noaa": 17.32,
-                "sg": 4.62
-            },
-            "time": "2024-07-08T12:00:00+00:00",
-            "windDirection": {
-                "noaa": 118.58,
-                "sg": 118.58
-            },
-            "windSpeed": {
-                "noaa": 3.04,
-                "sg": 3.04
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 236.6,
-                "sg": 236.6
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.06,
-                "sg": 0.06
-            },
-            "secondarySwellPeriod": {
-                "noaa": 12.75,
-                "sg": 12.75
-            },
-            "swellDirection": {
-                "dwd": 238.86,
-                "meteo": 244.58,
-                "noaa": 240.72,
-                "sg": 244.58
-            },
-            "swellHeight": {
-                "dwd": 0.48,
-                "meteo": 0.22,
-                "noaa": 0.06,
-                "sg": 0.22
-            },
-            "swellPeriod": {
-                "dwd": 6.34,
-                "meteo": 4.61,
-                "noaa": 16.96,
-                "sg": 4.61
-            },
-            "time": "2024-07-08T13:00:00+00:00",
-            "windDirection": {
-                "noaa": 113.36,
-                "sg": 113.36
-            },
-            "windSpeed": {
-                "noaa": 3.3,
-                "sg": 3.3
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 236.82,
-                "sg": 236.82
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.07,
-                "sg": 0.07
-            },
-            "secondarySwellPeriod": {
-                "noaa": 12.99,
-                "sg": 12.99
-            },
-            "swellDirection": {
-                "dwd": 238.77,
-                "meteo": 244.21,
-                "noaa": 240.72,
-                "sg": 244.21
-            },
-            "swellHeight": {
-                "dwd": 0.47,
-                "meteo": 0.21,
-                "noaa": 0.06,
-                "sg": 0.21
-            },
-            "swellPeriod": {
-                "dwd": 6.32,
-                "meteo": 4.61,
-                "noaa": 16.59,
-                "sg": 4.61
-            },
-            "time": "2024-07-08T14:00:00+00:00",
-            "windDirection": {
-                "noaa": 108.14,
-                "sg": 108.14
-            },
-            "windSpeed": {
-                "noaa": 3.57,
-                "sg": 3.57
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 237.04,
-                "sg": 237.04
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.07,
-                "sg": 0.07
-            },
-            "secondarySwellPeriod": {
-                "noaa": 13.24,
-                "sg": 13.24
-            },
-            "swellDirection": {
-                "dwd": 239.5,
-                "meteo": 243.85,
-                "noaa": 240.73,
-                "sg": 243.85
-            },
-            "swellHeight": {
-                "dwd": 0.46,
-                "meteo": 0.2,
-                "noaa": 0.06,
-                "sg": 0.2
-            },
-            "swellPeriod": {
-                "dwd": 6.25,
-                "meteo": 4.6,
-                "noaa": 16.23,
-                "sg": 4.6
-            },
-            "time": "2024-07-08T15:00:00+00:00",
-            "windDirection": {
-                "noaa": 102.92,
-                "sg": 102.92
-            },
-            "windSpeed": {
-                "noaa": 3.83,
-                "sg": 3.83
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 232.59,
-                "sg": 232.59
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.07,
-                "sg": 0.07
-            },
-            "secondarySwellPeriod": {
-                "noaa": 12.54,
-                "sg": 12.54
-            },
-            "swellDirection": {
-                "dwd": 239.17,
-                "meteo": 243.35,
-                "noaa": 242.07,
-                "sg": 243.35
-            },
-            "swellHeight": {
-                "dwd": 0.45,
-                "meteo": 0.19,
-                "noaa": 0.06,
-                "sg": 0.19
-            },
-            "swellPeriod": {
-                "dwd": 6.33,
-                "meteo": 4.62,
-                "noaa": 15.89,
-                "sg": 4.62
-            },
-            "time": "2024-07-08T16:00:00+00:00",
-            "windDirection": {
-                "noaa": 104.03,
-                "sg": 104.03
-            },
-            "windSpeed": {
-                "noaa": 4.88,
-                "sg": 4.88
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 228.14,
-                "sg": 228.14
-            },
-            "secondarySwellHeight": {
+                "dwd": 0.33,
+                "meteo": 0.13,
                 "noaa": 0.08,
-                "sg": 0.08
+                "sg": 0.13
+            },
+            "swellPeriod": {
+                "dwd": 7.63,
+                "meteo": 3.23,
+                "noaa": 13.68,
+                "sg": 3.23
+            },
+            "time": "2024-07-08T23:00:00+00:00",
+            "windDirection": {
+                "noaa": 73.69,
+                "sg": 73.69
+            },
+            "windSpeed": {
+                "noaa": 9.59,
+                "sg": 9.59
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 247.48,
+                "sg": 247.48
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.13,
+                "sg": 0.13
             },
             "secondarySwellPeriod": {
-                "noaa": 11.83,
-                "sg": 11.83
+                "noaa": 8.25,
+                "sg": 8.25
             },
             "swellDirection": {
-                "dwd": 241.31,
-                "meteo": 242.84,
-                "noaa": 243.41,
-                "sg": 242.84
+                "dwd": 233.34,
+                "meteo": 12.87,
+                "noaa": 245.19,
+                "sg": 12.87
             },
             "swellHeight": {
-                "dwd": 0.45,
+                "dwd": 0.32,
+                "meteo": 0.11,
+                "noaa": 0.08,
+                "sg": 0.11
+            },
+            "swellPeriod": {
+                "dwd": 7.76,
+                "meteo": 2.45,
+                "noaa": 13.15,
+                "sg": 2.45
+            },
+            "time": "2024-07-09T00:00:00+00:00",
+            "windDirection": {
+                "noaa": 67.91,
+                "sg": 67.91
+            },
+            "windSpeed": {
+                "noaa": 10.66,
+                "sg": 10.66
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 248.48,
+                "sg": 248.48
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.13,
+                "sg": 0.13
+            },
+            "secondarySwellPeriod": {
+                "noaa": 7.77,
+                "sg": 7.77
+            },
+            "swellDirection": {
+                "dwd": 226.71,
+                "meteo": 324.62,
+                "noaa": 247.25,
+                "sg": 324.62
+            },
+            "swellHeight": {
+                "dwd": 0.31,
+                "meteo": 0.13,
+                "noaa": 0.09,
+                "sg": 0.13
+            },
+            "swellPeriod": {
+                "dwd": 8.52,
+                "meteo": 3.8,
+                "noaa": 12.53,
+                "sg": 3.8
+            },
+            "time": "2024-07-09T01:00:00+00:00",
+            "windDirection": {
+                "noaa": 65.11,
+                "sg": 65.11
+            },
+            "windSpeed": {
+                "noaa": 10.52,
+                "sg": 10.52
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 249.47,
+                "sg": 249.47
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.13,
+                "sg": 0.13
+            },
+            "secondarySwellPeriod": {
+                "noaa": 7.28,
+                "sg": 7.28
+            },
+            "swellDirection": {
+                "dwd": 227.61,
+                "meteo": 276.38,
+                "noaa": 249.3,
+                "sg": 276.38
+            },
+            "swellHeight": {
+                "dwd": 0.3,
+                "meteo": 0.16,
+                "noaa": 0.1,
+                "sg": 0.16
+            },
+            "swellPeriod": {
+                "dwd": 8.75,
+                "meteo": 5.15,
+                "noaa": 11.9,
+                "sg": 5.15
+            },
+            "time": "2024-07-09T02:00:00+00:00",
+            "windDirection": {
+                "noaa": 62.32,
+                "sg": 62.32
+            },
+            "windSpeed": {
+                "noaa": 10.39,
+                "sg": 10.39
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 250.47,
+                "sg": 250.47
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.13,
+                "sg": 0.13
+            },
+            "secondarySwellPeriod": {
+                "noaa": 6.8,
+                "sg": 6.8
+            },
+            "swellDirection": {
+                "dwd": 229.4,
+                "meteo": 228.13,
+                "noaa": 251.36,
+                "sg": 228.13
+            },
+            "swellHeight": {
+                "dwd": 0.31,
                 "meteo": 0.18,
-                "noaa": 0.06,
+                "noaa": 0.11,
                 "sg": 0.18
             },
             "swellPeriod": {
-                "dwd": 6.16,
-                "meteo": 4.63,
-                "noaa": 15.55,
-                "sg": 4.63
+                "dwd": 8.83,
+                "meteo": 6.5,
+                "noaa": 11.28,
+                "sg": 6.5
             },
-            "time": "2024-07-08T17:00:00+00:00",
+            "time": "2024-07-09T03:00:00+00:00",
             "windDirection": {
-                "noaa": 105.15,
-                "sg": 105.15
+                "noaa": 59.52,
+                "sg": 59.52
             },
             "windSpeed": {
-                "noaa": 5.92,
-                "sg": 5.92
+                "noaa": 10.25,
+                "sg": 10.25
             }
         },
         {
             "secondarySwellDirection": {
-                "noaa": 223.69,
-                "sg": 223.69
+                "noaa": 245.26,
+                "sg": 245.26
             },
             "secondarySwellHeight": {
-                "noaa": 0.08,
-                "sg": 0.08
-            },
-            "secondarySwellPeriod": {
-                "noaa": 11.13,
-                "sg": 11.13
-            },
-            "swellDirection": {
-                "dwd": 241.92,
-                "meteo": 242.34,
-                "noaa": 244.75,
-                "sg": 242.34
-            },
-            "swellHeight": {
-                "dwd": 0.45,
-                "meteo": 0.17,
-                "noaa": 0.06,
-                "sg": 0.17
-            },
-            "swellPeriod": {
-                "dwd": 6.16,
-                "meteo": 4.65,
-                "noaa": 15.21,
-                "sg": 4.65
-            },
-            "time": "2024-07-08T18:00:00+00:00",
-            "windDirection": {
-                "noaa": 106.26,
-                "sg": 106.26
-            },
-            "windSpeed": {
-                "noaa": 6.97,
-                "sg": 6.97
-            }
-        },
-        {
-            "secondarySwellDirection": {
-                "noaa": 229.64,
-                "sg": 229.64
-            },
-            "secondarySwellHeight": {
-                "noaa": 0.08,
-                "sg": 0.08
-            },
-            "secondarySwellPeriod": {
-                "noaa": 11.54,
-                "sg": 11.54
-            },
-            "swellDirection": {
-                "dwd": 241.57,
-                "meteo": 241.42,
-                "noaa": 244.73,
-                "sg": 241.42
-            },
-            "swellHeight": {
-                "dwd": 0.47,
-                "meteo": 0.16,
-                "noaa": 0.06,
+                "noaa": 0.16,
                 "sg": 0.16
             },
-            "swellPeriod": {
-                "dwd": 5.71,
-                "meteo": 4.69,
-                "noaa": 15.05,
-                "sg": 4.69
+            "secondarySwellPeriod": {
+                "noaa": 7.9,
+                "sg": 7.9
             },
-            "time": "2024-07-08T19:00:00+00:00",
+            "swellDirection": {
+                "dwd": 269.67,
+                "meteo": 283.59,
+                "noaa": 252.42,
+                "sg": 283.59
+            },
+            "swellHeight": {
+                "dwd": 0.39,
+                "meteo": 0.24,
+                "noaa": 0.11,
+                "sg": 0.24
+            },
+            "swellPeriod": {
+                "dwd": 7.7,
+                "meteo": 5.28,
+                "noaa": 11.39,
+                "sg": 5.28
+            },
+            "time": "2024-07-09T04:00:00+00:00",
             "windDirection": {
-                "noaa": 99.25,
-                "sg": 99.25
+                "noaa": 92.7,
+                "sg": 92.7
             },
             "windSpeed": {
-                "noaa": 7.13,
-                "sg": 7.13
+                "noaa": 9.87,
+                "sg": 9.87
             }
         },
         {
             "secondarySwellDirection": {
-                "noaa": 235.6,
-                "sg": 235.6
+                "noaa": 240.04,
+                "sg": 240.04
             },
             "secondarySwellHeight": {
-                "noaa": 0.08,
-                "sg": 0.08
+                "noaa": 0.18,
+                "sg": 0.18
             },
             "secondarySwellPeriod": {
-                "noaa": 11.94,
-                "sg": 11.94
+                "noaa": 8.99,
+                "sg": 8.99
             },
             "swellDirection": {
-                "dwd": 240.89,
-                "meteo": 240.5,
-                "noaa": 244.7,
-                "sg": 240.5
+                "dwd": 13.84,
+                "meteo": 339.06,
+                "noaa": 253.48,
+                "sg": 339.06
             },
             "swellHeight": {
-                "dwd": 0.44,
-                "meteo": 0.16,
-                "noaa": 0.07,
-                "sg": 0.16
+                "dwd": 0.65,
+                "meteo": 0.3,
+                "noaa": 0.11,
+                "sg": 0.3
             },
             "swellPeriod": {
-                "dwd": 5.96,
-                "meteo": 4.74,
-                "noaa": 14.89,
-                "sg": 4.74
+                "dwd": 6.15,
+                "meteo": 4.05,
+                "noaa": 11.49,
+                "sg": 4.05
             },
-            "time": "2024-07-08T20:00:00+00:00",
+            "time": "2024-07-09T05:00:00+00:00",
             "windDirection": {
-                "noaa": 92.25,
-                "sg": 92.25
+                "noaa": 125.88,
+                "sg": 125.88
             },
             "windSpeed": {
-                "noaa": 7.28,
-                "sg": 7.28
+                "noaa": 9.49,
+                "sg": 9.49
             }
         },
         {
             "secondarySwellDirection": {
-                "noaa": 241.55,
-                "sg": 241.55
+                "noaa": 234.83,
+                "sg": 234.83
             },
             "secondarySwellHeight": {
-                "noaa": 0.08,
-                "sg": 0.08
+                "noaa": 0.21,
+                "sg": 0.21
             },
             "secondarySwellPeriod": {
-                "noaa": 12.35,
-                "sg": 12.35
+                "noaa": 10.09,
+                "sg": 10.09
             },
             "swellDirection": {
-                "dwd": 240.59,
-                "meteo": 239.58,
-                "noaa": 244.68,
-                "sg": 239.58
+                "dwd": 44.38,
+                "meteo": 34.52,
+                "noaa": 254.54,
+                "sg": 34.52
             },
             "swellHeight": {
-                "dwd": 0.42,
-                "meteo": 0.15,
-                "noaa": 0.07,
+                "dwd": 0.95,
+                "meteo": 0.36,
+                "noaa": 0.11,
+                "sg": 0.36
+            },
+            "swellPeriod": {
+                "dwd": 5.2,
+                "meteo": 2.83,
+                "noaa": 11.6,
+                "sg": 2.83
+            },
+            "time": "2024-07-09T06:00:00+00:00",
+            "windDirection": {
+                "noaa": 159.06,
+                "sg": 159.06
+            },
+            "windSpeed": {
+                "noaa": 9.11,
+                "sg": 9.11
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 253.18,
+                "sg": 253.18
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.26,
+                "sg": 0.26
+            },
+            "secondarySwellPeriod": {
+                "noaa": 8.6,
+                "sg": 8.6
+            },
+            "swellDirection": {
+                "dwd": 44.99,
+                "meteo": 32.25,
+                "noaa": 251.76,
+                "sg": 32.25
+            },
+            "swellHeight": {
+                "dwd": 0.86,
+                "meteo": 0.33,
+                "noaa": 0.14,
+                "sg": 0.33
+            },
+            "swellPeriod": {
+                "dwd": 5.32,
+                "meteo": 2.81,
+                "noaa": 10.46,
+                "sg": 2.81
+            },
+            "time": "2024-07-09T07:00:00+00:00",
+            "windDirection": {
+                "noaa": 165.04,
+                "sg": 165.04
+            },
+            "windSpeed": {
+                "noaa": 9.61,
+                "sg": 9.61
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 271.52,
+                "sg": 271.52
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.31,
+                "sg": 0.31
+            },
+            "secondarySwellPeriod": {
+                "noaa": 7.11,
+                "sg": 7.11
+            },
+            "swellDirection": {
+                "dwd": 38.92,
+                "meteo": 29.97,
+                "noaa": 248.98,
+                "sg": 29.97
+            },
+            "swellHeight": {
+                "dwd": 0.77,
+                "meteo": 0.31,
+                "noaa": 0.16,
+                "sg": 0.31
+            },
+            "swellPeriod": {
+                "dwd": 5.6,
+                "meteo": 2.79,
+                "noaa": 9.31,
+                "sg": 2.79
+            },
+            "time": "2024-07-09T08:00:00+00:00",
+            "windDirection": {
+                "noaa": 171.02,
+                "sg": 171.02
+            },
+            "windSpeed": {
+                "noaa": 10.1,
+                "sg": 10.1
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 289.87,
+                "sg": 289.87
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.36,
+                "sg": 0.36
+            },
+            "secondarySwellPeriod": {
+                "noaa": 5.62,
+                "sg": 5.62
+            },
+            "swellDirection": {
+                "dwd": 21.57,
+                "meteo": 27.7,
+                "noaa": 246.2,
+                "sg": 27.7
+            },
+            "swellHeight": {
+                "dwd": 0.73,
+                "meteo": 0.28,
+                "noaa": 0.19,
+                "sg": 0.28
+            },
+            "swellPeriod": {
+                "dwd": 5.89,
+                "meteo": 2.77,
+                "noaa": 8.17,
+                "sg": 2.77
+            },
+            "time": "2024-07-09T09:00:00+00:00",
+            "windDirection": {
+                "noaa": 177.0,
+                "sg": 177.0
+            },
+            "windSpeed": {
+                "noaa": 10.6,
+                "sg": 10.6
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 305.7,
+                "sg": 305.7
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.32,
+                "sg": 0.32
+            },
+            "secondarySwellPeriod": {
+                "noaa": 5.85,
+                "sg": 5.85
+            },
+            "swellDirection": {
+                "dwd": 348.58,
+                "meteo": 24.17,
+                "noaa": 224.32,
+                "sg": 24.17
+            },
+            "swellHeight": {
+                "dwd": 0.71,
+                "meteo": 0.27,
+                "noaa": 0.17,
+                "sg": 0.27
+            },
+            "swellPeriod": {
+                "dwd": 6.16,
+                "meteo": 2.89,
+                "noaa": 8.46,
+                "sg": 2.89
+            },
+            "time": "2024-07-09T10:00:00+00:00",
+            "windDirection": {
+                "noaa": 179.49,
+                "sg": 179.49
+            },
+            "windSpeed": {
+                "noaa": 11.06,
+                "sg": 11.06
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 321.52,
+                "sg": 321.52
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.27,
+                "sg": 0.27
+            },
+            "secondarySwellPeriod": {
+                "noaa": 6.07,
+                "sg": 6.07
+            },
+            "swellDirection": {
+                "dwd": 327.05,
+                "meteo": 20.65,
+                "noaa": 202.43,
+                "sg": 20.65
+            },
+            "swellHeight": {
+                "dwd": 0.72,
+                "meteo": 0.25,
+                "noaa": 0.16,
+                "sg": 0.25
+            },
+            "swellPeriod": {
+                "dwd": 6.42,
+                "meteo": 3.0,
+                "noaa": 8.76,
+                "sg": 3.0
+            },
+            "time": "2024-07-09T11:00:00+00:00",
+            "windDirection": {
+                "noaa": 181.97,
+                "sg": 181.97
+            },
+            "windSpeed": {
+                "noaa": 11.53,
+                "sg": 11.53
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 337.35,
+                "sg": 337.35
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.23,
+                "sg": 0.23
+            },
+            "secondarySwellPeriod": {
+                "noaa": 6.3,
+                "sg": 6.3
+            },
+            "swellDirection": {
+                "dwd": 319.49,
+                "meteo": 17.12,
+                "noaa": 180.55,
+                "sg": 17.12
+            },
+            "swellHeight": {
+                "dwd": 0.74,
+                "meteo": 0.24,
+                "noaa": 0.14,
+                "sg": 0.24
+            },
+            "swellPeriod": {
+                "dwd": 6.67,
+                "meteo": 3.12,
+                "noaa": 9.05,
+                "sg": 3.12
+            },
+            "time": "2024-07-09T12:00:00+00:00",
+            "windDirection": {
+                "noaa": 184.46,
+                "sg": 184.46
+            },
+            "windSpeed": {
+                "noaa": 11.99,
+                "sg": 11.99
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 307.2,
+                "sg": 307.2
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.2,
+                "sg": 0.2
+            },
+            "secondarySwellPeriod": {
+                "noaa": 8.09,
+                "sg": 8.09
+            },
+            "swellDirection": {
+                "dwd": 312.23,
+                "meteo": 14.71,
+                "noaa": 204.43,
+                "sg": 14.71
+            },
+            "swellHeight": {
+                "dwd": 0.76,
+                "meteo": 0.23,
+                "noaa": 0.12,
+                "sg": 0.23
+            },
+            "swellPeriod": {
+                "dwd": 6.9,
+                "meteo": 3.26,
+                "noaa": 10.74,
+                "sg": 3.26
+            },
+            "time": "2024-07-09T13:00:00+00:00",
+            "windDirection": {
+                "noaa": 195.25,
+                "sg": 195.25
+            },
+            "windSpeed": {
+                "noaa": 10.82,
+                "sg": 10.82
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 277.04,
+                "sg": 277.04
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.18,
+                "sg": 0.18
+            },
+            "secondarySwellPeriod": {
+                "noaa": 9.87,
+                "sg": 9.87
+            },
+            "swellDirection": {
+                "dwd": 286.16,
+                "meteo": 12.31,
+                "noaa": 228.31,
+                "sg": 12.31
+            },
+            "swellHeight": {
+                "dwd": 0.78,
+                "meteo": 0.23,
+                "noaa": 0.1,
+                "sg": 0.23
+            },
+            "swellPeriod": {
+                "dwd": 7.09,
+                "meteo": 3.41,
+                "noaa": 12.42,
+                "sg": 3.41
+            },
+            "time": "2024-07-09T14:00:00+00:00",
+            "windDirection": {
+                "noaa": 206.03,
+                "sg": 206.03
+            },
+            "windSpeed": {
+                "noaa": 9.65,
+                "sg": 9.65
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 246.89,
+                "sg": 246.89
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.15,
                 "sg": 0.15
             },
-            "swellPeriod": {
-                "dwd": 6.2,
-                "meteo": 4.78,
-                "noaa": 14.73,
-                "sg": 4.78
+            "secondarySwellPeriod": {
+                "noaa": 11.66,
+                "sg": 11.66
             },
-            "time": "2024-07-08T21:00:00+00:00",
+            "swellDirection": {
+                "dwd": 272.22,
+                "meteo": 9.9,
+                "noaa": 252.19,
+                "sg": 9.9
+            },
+            "swellHeight": {
+                "dwd": 0.74,
+                "meteo": 0.22,
+                "noaa": 0.08,
+                "sg": 0.22
+            },
+            "swellPeriod": {
+                "dwd": 7.41,
+                "meteo": 3.55,
+                "noaa": 14.11,
+                "sg": 3.55
+            },
+            "time": "2024-07-09T15:00:00+00:00",
             "windDirection": {
-                "noaa": 85.24,
-                "sg": 85.24
+                "noaa": 216.82,
+                "sg": 216.82
             },
             "windSpeed": {
-                "noaa": 7.44,
-                "sg": 7.44
+                "noaa": 8.48,
+                "sg": 8.48
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 266.27,
+                "sg": 266.27
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.22,
+                "sg": 0.22
+            },
+            "secondarySwellPeriod": {
+                "noaa": 10.41,
+                "sg": 10.41
+            },
+            "swellDirection": {
+                "dwd": 283.07,
+                "meteo": 320.12,
+                "noaa": 250.18,
+                "sg": 320.12
+            },
+            "swellHeight": {
+                "dwd": 0.62,
+                "meteo": 0.22,
+                "noaa": 0.08,
+                "sg": 0.22
+            },
+            "swellPeriod": {
+                "dwd": 7.82,
+                "meteo": 4.26,
+                "noaa": 14.57,
+                "sg": 4.26
+            },
+            "time": "2024-07-09T16:00:00+00:00",
+            "windDirection": {
+                "noaa": 227.18,
+                "sg": 227.18
+            },
+            "windSpeed": {
+                "noaa": 8.5,
+                "sg": 8.5
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 285.66,
+                "sg": 285.66
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.28,
+                "sg": 0.28
+            },
+            "secondarySwellPeriod": {
+                "noaa": 9.16,
+                "sg": 9.16
+            },
+            "swellDirection": {
+                "dwd": 254.9,
+                "meteo": 270.33,
+                "noaa": 248.16,
+                "sg": 270.33
+            },
+            "swellHeight": {
+                "dwd": 0.59,
+                "meteo": 0.21,
+                "noaa": 0.09,
+                "sg": 0.21
+            },
+            "swellPeriod": {
+                "dwd": 8.15,
+                "meteo": 4.97,
+                "noaa": 15.02,
+                "sg": 4.97
+            },
+            "time": "2024-07-09T17:00:00+00:00",
+            "windDirection": {
+                "noaa": 237.53,
+                "sg": 237.53
+            },
+            "windSpeed": {
+                "noaa": 8.53,
+                "sg": 8.53
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 305.04,
+                "sg": 305.04
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.35,
+                "sg": 0.35
+            },
+            "secondarySwellPeriod": {
+                "noaa": 7.91,
+                "sg": 7.91
+            },
+            "swellDirection": {
+                "dwd": 235.58,
+                "meteo": 220.55,
+                "noaa": 246.15,
+                "sg": 220.55
+            },
+            "swellHeight": {
+                "dwd": 0.6,
+                "meteo": 0.21,
+                "noaa": 0.09,
+                "sg": 0.21
+            },
+            "swellPeriod": {
+                "dwd": 8.31,
+                "meteo": 5.68,
+                "noaa": 15.48,
+                "sg": 5.68
+            },
+            "time": "2024-07-09T18:00:00+00:00",
+            "windDirection": {
+                "noaa": 247.89,
+                "sg": 247.89
+            },
+            "windSpeed": {
+                "noaa": 8.55,
+                "sg": 8.55
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 303.81,
+                "sg": 303.81
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.35,
+                "sg": 0.35
+            },
+            "secondarySwellPeriod": {
+                "noaa": 7.36,
+                "sg": 7.36
+            },
+            "swellDirection": {
+                "dwd": 234.56,
+                "meteo": 219.62,
+                "noaa": 247.81,
+                "sg": 219.62
+            },
+            "swellHeight": {
+                "dwd": 0.58,
+                "meteo": 0.21,
+                "noaa": 0.11,
+                "sg": 0.21
+            },
+            "swellPeriod": {
+                "dwd": 8.51,
+                "meteo": 5.54,
+                "noaa": 14.1,
+                "sg": 5.54
+            },
+            "time": "2024-07-09T19:00:00+00:00",
+            "windDirection": {
+                "noaa": 246.7,
+                "sg": 246.7
+            },
+            "windSpeed": {
+                "noaa": 7.89,
+                "sg": 7.89
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 302.58,
+                "sg": 302.58
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.36,
+                "sg": 0.36
+            },
+            "secondarySwellPeriod": {
+                "noaa": 6.82,
+                "sg": 6.82
+            },
+            "swellDirection": {
+                "dwd": 243.2,
+                "meteo": 218.68,
+                "noaa": 249.46,
+                "sg": 218.68
+            },
+            "swellHeight": {
+                "dwd": 0.53,
+                "meteo": 0.21,
+                "noaa": 0.13,
+                "sg": 0.21
+            },
+            "swellPeriod": {
+                "dwd": 8.66,
+                "meteo": 5.4,
+                "noaa": 12.71,
+                "sg": 5.4
+            },
+            "time": "2024-07-09T20:00:00+00:00",
+            "windDirection": {
+                "noaa": 245.52,
+                "sg": 245.52
+            },
+            "windSpeed": {
+                "noaa": 7.24,
+                "sg": 7.24
+            }
+        },
+        {
+            "secondarySwellDirection": {
+                "noaa": 301.35,
+                "sg": 301.35
+            },
+            "secondarySwellHeight": {
+                "noaa": 0.36,
+                "sg": 0.36
+            },
+            "secondarySwellPeriod": {
+                "noaa": 6.27,
+                "sg": 6.27
+            },
+            "swellDirection": {
+                "dwd": 238.38,
+                "meteo": 217.75,
+                "noaa": 251.12,
+                "sg": 217.75
+            },
+            "swellHeight": {
+                "dwd": 0.58,
+                "meteo": 0.21,
+                "noaa": 0.15,
+                "sg": 0.21
+            },
+            "swellPeriod": {
+                "dwd": 8.39,
+                "meteo": 5.26,
+                "noaa": 11.33,
+                "sg": 5.26
+            },
+            "time": "2024-07-09T21:00:00+00:00",
+            "windDirection": {
+                "noaa": 244.33,
+                "sg": 244.33
+            },
+            "windSpeed": {
+                "noaa": 6.58,
+                "sg": 6.58
             }
         }
     ],
     "meta": {
         "cost": 1,
         "dailyQuota": 10,
-        "end": "2024-07-08 21:59",
+        "end": "2024-07-09 21:59",
         "lat": 51.8969,
         "lng": -5.2977,
         "params": [
@@ -1001,7 +1001,7 @@
             "windDirection",
             "windSpeed"
         ],
-        "requestCount": 5,
-        "start": "2024-07-07 22:00"
+        "requestCount": 1,
+        "start": "2024-07-08 22:00"
     }
 }
