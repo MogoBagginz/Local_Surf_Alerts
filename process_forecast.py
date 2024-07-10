@@ -19,12 +19,12 @@ import datetime
 # TODO either average out the data providers (e.g. NOAA) or select the best one
 
 class Surf_Break_Conditions: #TODO think about removing the Nones
-    def __init__(self, name=None, lat=None, long=None, time=None,
-                 primary_wave_energy=None, secondary_wave_energy=None,
-                 combined_wave_energy=None, rel_swell_dir=None,
-                 effective_power=None, rel_wind_dir=None,
-                 messiness_wind=None, messiness_swell=None,
-                 messiness_total=None):
+    def __init__(self, name=None, lat=None, long=None, time=None, primary_wave_energy=None,
+                 secondary_wave_energy=None, combined_wave_energy=None,
+                 combined_swell_dir=None, rel_swell_dir=None,
+                 effective_power=None, rel_wind_dir=None, messiness_wind=None, messiness_swell=None,
+                 messiness_total=None, primary_height=None, primary_period=None, primary_dir=None,
+                 secondary_wave_rel_dir=None, wind_speed=None, wind_gust=None):
         self.name = name
         self.lat = lat
         self.long = long
@@ -32,13 +32,41 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
         self.primary_wave_energy = primary_wave_energy
         self.secondary_wave_energy = secondary_wave_energy
         self.combined_wave_energy = combined_wave_energy
+        self.combined_swell_dir = combined_swell_dir
         self.rel_swell_dir = rel_swell_dir
         self.effective_power = effective_power
         self.rel_wind_dir = rel_wind_dir
         self.messiness_wind = messiness_wind
         self.messiness_swell = messiness_swell
         self.messiness_total = messiness_total
-    
+        self.primary_height = primary_height
+        self.primary_period = primary_period
+        self.primary_dir = primary_dir
+        self.secondary_wave_rel_dir = secondary_wave_rel_dir
+        self.wind_speed = wind_speed
+        self.wind_gust = wind_gust
+   
+    def short_summary(self):
+        rtn_val = f"\n--- Simple {self.name} condition summary ---\n\n"\
+                f"Effective power: {self.effective_power:.2f}\n"\
+                f"Messiness from swell: {self.messiness_swell:.0f}%\n"\
+                f"Messiness from wind: {self.messiness_wind:.0f}%\n"
+        return rtn_val
+
+    def summary(self):
+        rtn_val = f"\n--- {self.name} condition summary ---\n\n"\
+                  f"Effective power: {self.effective_power:.2f}\n"\
+                  f"Primary height: {self.primary_height:.2f} meters\n"\
+                  f"Primary period: {self.primary_period:.2f} seconds\n"\
+                  f"Primary direction: {self.primary_dir:.2f}\n"\
+                  f"Secondary wave power: {self.secondary_wave_energy:.2f}\n"\
+                  f"Secondary wave relative direction: {self.secondary_wave_rel_dir:.2f}\n"\
+                  f"Messiness: {self.messiness_total:.0f}%\n"\
+                  f"Relative wind direction: {self.rel_wind_dir:.2f}\n"\
+                  f"Wind speed: {self.wind_speed:.2f} kph\n"\
+                  f"Wind gust: {self.wind_gust:.2f} kph\n"
+        return rtn_val
+
     def __str__(self):
         # Print class name
         rtn_val = f"\nClass: {self.__class__.__name__}\n\nAttributes:\n"
@@ -55,20 +83,20 @@ def check_surf_at_spot(spot_conf, spot_conditions):
     else:
         return False
 
-def process_forecast(spot_conf, forecast, spot_conditions):
-    primary_wave_energy = get_wave_energy(float(forecast['hours'][0]['swellPeriod']['noaa']),
-                                          float(forecast['hours'][0]['swellHeight']['noaa']))
-    secondary_wave_energy = get_wave_energy(float(forecast['hours'][0]['secondarySwellPeriod']['noaa']),
-                                            float(forecast['hours'][0]['secondarySwellHeight']['noaa']))
-    combined_swell_dir = get_relative_dir(forecast['hours'][0]['swellDirection']['noaa'],
-                                          forecast['hours'][0]['secondarySwellDirection']['noaa'])
+def process_forecast(spot_conf, forecast, spot_conditions, hour):
+    primary_wave_energy = get_wave_energy(float(forecast['hours'][hour]['swellPeriod']['noaa']),
+                                          float(forecast['hours'][hour]['swellHeight']['noaa']))
+    secondary_wave_energy = get_wave_energy(float(forecast['hours'][hour]['secondarySwellPeriod']['noaa']),
+                                            float(forecast['hours'][hour]['secondarySwellHeight']['noaa']))
+    combined_swell_dir = get_relative_dir(forecast['hours'][hour]['swellDirection']['noaa'],
+                                          forecast['hours'][hour]['secondarySwellDirection']['noaa'])
     combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
                                                     secondary_wave_energy,
                                                     combined_swell_dir)
     rel_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
     effective_power = calculate_effective_power(combined_wave_energy, rel_swell_dir)
     rel_wind_dir = get_relative_dir(spot_conf.break_direction,
-                                    forecast['hours'][0]['windDirection']['noaa'])
+                                    forecast['hours'][hour]['windDirection']['noaa'])
     spot_conditions.rel_wind_dir = rel_wind_dir
     spot_conditions.name = spot_conf.name
     spot_conditions.lat = spot_conf.latitude
@@ -80,8 +108,18 @@ def process_forecast(spot_conf, forecast, spot_conditions):
     spot_conditions.combined_swell_dir = combined_swell_dir
     spot_conditions.rel_swell_dir = rel_swell_dir
     spot_conditions.effective_power = effective_power
+    spot_conditions.primary_height = forecast['hours'][hour]['swellHeight']['noaa']
+    spot_conditions.primary_period = forecast['hours'][hour]['swellPeriod']['noaa']
+    spot_conditions.primary_dir = forecast['hours'][hour]['swellDirection']['noaa']
+    spot_conditions.secondary_wave_rel_dir = get_relative_dir(spot_conf.break_direction,
+                                                              forecast['hours'][hour]['swellDirection']['noaa']) 
+    spot_conditions.wind_speed = mps_to_kph(forecast['hours'][hour]['windSpeed']['noaa'])
+    spot_conditions.wind_gust = mps_to_kph(forecast['hours'][hour]['gust']['noaa'])
 
-def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
+def mps_to_kph(mps):
+    return mps * 3.6
+
+def check_surf_cleanliness(spot_conf, spot_conditions):
     wave_e_1 = spot_conditions.primary_wave_energy
     wave_e_2 = spot_conditions.secondary_wave_energy
 
@@ -98,9 +136,9 @@ def check_surf_cleanliness(spot_conf, spot_conditions, wind_speed):
     
     # - check if the wind make it massy -
     if abs(spot_conditions.rel_wind_dir) >= 180: # offshore
-            wind_messiness = (wind_speed / spot_conf.max_offshore_wind_speed) * 100
+            wind_messiness = (spot_conditions.wind_speed / spot_conf.max_offshore_wind_speed) * 100
     else:
-            wind_messiness = (wind_speed / spot_conf.max_onshore_wind_speed) *  100
+            wind_messiness = (spot_conditions.wind_speed / spot_conf.max_onshore_wind_speed) *  100
 
     spot_conditions.messiness_wind = wind_messiness
     spot_conditions.messiness_swell = swell_messiness
