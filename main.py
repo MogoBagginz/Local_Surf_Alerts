@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
+"""
+surf cam = https://www.surfline.com/surf-report/whitesands/584204204e65fad6a77090ce?view=table
+"""
 
+import notify
 import spot_conf
 import process_forecast
 import fetch_forecast
@@ -66,13 +70,25 @@ if __name__ == "__main__":
     process_forecast.check_surf_cleanliness(whitesands_conf, whitesands_conditions)
    
     # print everything
-    print(json.dumps(latest_forecast['hours'][6+LOCAL_OFFSET], indent=4))
-    print(json.dumps(latest_tides['data'], indent=4))
+    #print(json.dumps(latest_forecast['hours'][6+LOCAL_OFFSET], indent=4))
+    #print(json.dumps(latest_tides['data'], indent=4))
     print(whitesands_conf)
     print(whitesands_conditions)
-    print(whitesands_conditions.short_summary())
     print(whitesands_conditions.summary())
-
+    
+    notify_string = ""
+    for days in range(0, 7, 1):
+        for hour in range(6, 22, 3): 
+            process_forecast.process_forecast(whitesands_conf, latest_forecast,
+                                              whitesands_conditions,
+                                              hour + (days * 24))
+            process_forecast.check_surf_cleanliness(whitesands_conf, whitesands_conditions)
+            if process_forecast.check_surf_at_spot(whitesands_conf,
+                                                   whitesands_conditions):
+                notify_string += whitesands_conditions.short_summary(days, hour)   
+    if notify_string:
+        notify.send_notification("Surfs up bro!!!", notify_string)
+        
     # Get the current time in Germany (CET/CEST)
     time_now_germany = arrow.now('Europe/Berlin')
     tide_height_now = process_forecast.calculate_tide_height(latest_tides,

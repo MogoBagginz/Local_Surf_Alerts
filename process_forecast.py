@@ -46,15 +46,17 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
         self.wind_speed = wind_speed
         self.wind_gust = wind_gust
    
-    def short_summary(self):
+    def short_summary(self, day=0, hour=0):
         rtn_val = f"\n--- Simple {self.name} condition summary ---\n\n"\
+                f"In {day} days at {hour} o'clock\n"\
                 f"Effective power: {self.effective_power:.2f}\n"\
                 f"Messiness from swell: {self.messiness_swell:.0f}%\n"\
                 f"Messiness from wind: {self.messiness_wind:.0f}%\n"
         return rtn_val
 
-    def summary(self):
+    def summary(self, day=0, hour=0):
         rtn_val = f"\n--- {self.name} condition summary ---\n\n"\
+                  f"In {day} days at {hour} o'clock\n"\
                   f"Effective power: {self.effective_power:.2f}\n"\
                   f"Primary height: {self.primary_height:.2f} meters\n"\
                   f"Primary period: {self.primary_period:.2f} seconds\n"\
@@ -78,7 +80,7 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
 
 def check_surf_at_spot(spot_conf, spot_conditions): 
     if spot_conditions.effective_power >= spot_conf.min_wave_energy \
-    and spot_conditions.messiness < 100:
+    and spot_conditions.messiness_total <= 100:
         return True 
     else:
         return False
@@ -101,7 +103,7 @@ def process_forecast(spot_conf, forecast, spot_conditions, hour):
     spot_conditions.name = spot_conf.name
     spot_conditions.lat = spot_conf.latitude
     spot_conditions.long = spot_conf.longitude
-    spot_conditions.time = arrow.now()
+    spot_conditions.time = hour
     spot_conditions.primary_wave_energy = primary_wave_energy
     spot_conditions.secondary_wave_energy = secondary_wave_energy
     spot_conditions.combined_wave_energy = combined_wave_energy
@@ -136,9 +138,9 @@ def check_surf_cleanliness(spot_conf, spot_conditions):
     
     # - check if the wind make it massy -
     if abs(spot_conditions.rel_wind_dir) >= 180: # offshore
-            wind_messiness = (spot_conditions.wind_speed / spot_conf.max_offshore_wind_speed) * 100
+        wind_messiness = (spot_conditions.wind_speed / spot_conf.max_offshore_wind_speed) * 100
     else:
-            wind_messiness = (spot_conditions.wind_speed / spot_conf.max_onshore_wind_speed) *  100
+        wind_messiness = (spot_conditions.wind_speed / spot_conf.max_onshore_wind_speed) * 100
 
     spot_conditions.messiness_wind = wind_messiness
     spot_conditions.messiness_swell = swell_messiness
