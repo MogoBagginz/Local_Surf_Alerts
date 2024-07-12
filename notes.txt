@@ -1,0 +1,33 @@
+=-=-=-=-=-=-=- Notes from The Maritime Engineering Reference Book -=-=-=-=-=-=-=
+
+stokes and airy theory
+
+airy theory is good for low amplitude vs wave length and depth (offshore inc.
+non-local big swell)
+	linear wave theory
+
+if the height of a wave is 1/7th the lenght of a wave, it will break
+
+ocillatory wave: Lw/d=16.4 (looks like a sine wave)
+
+solitary wave: Lw/d=infinite and Hw/d=0.479                (0.479 = 1/7)
+
+cnoidal wave: Lw/d=16.4 and Hw/d=0.497
+
+Wave steepness = Hw/Lw
+
+Hw = wave height
+Lw = wave length
+Tw = wave period = ~= 0.8 srt(Lw)
+circular wave frequency = omega = 2 * pi / Tw (rad/s) = 2 * pi f = 1 / Tw
+wave number = k = 2 * pi / Lw (rad/m) = omega^2 / g
+wave celerity (phase velocity) = c = Lw / Tw = g / omega = srt(g / k)
+tangential velocity = Vt = 0.5*Hw*omega
+
+because larger waves travel faster, the largest waves arrive at the beach first.
+	this is calles the normal dispersion of waves
+
+
+stokes theory is good for high amplitude vs wave length and dept (coastal or
+storm swell)
+	nonlinear wave theory

@@ -47,8 +47,7 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
         self.wind_gust = wind_gust
    
     def short_summary(self, day=0, hour=0):
-        rtn_val = f"\n--- Simple {self.name} condition summary ---\n\n"\
-                f"In {day} days at {hour} o'clock\n"\
+        rtn_val = f"\n- {self.name} surf in {day} days at {hour} o'clock -\n\n"\
                 f"Effective power: {self.effective_power:.2f}\n"\
                 f"Messiness from swell: {self.messiness_swell:.0f}%\n"\
                 f"Messiness from wind: {self.messiness_wind:.0f}%\n"

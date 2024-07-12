@@ -67,12 +67,12 @@ def update_forecast(lat, lng, start_time, end_time, api_key,
     
     print(f"latest_forecast['meta']['requestCount'] : {latest_forecast['meta']['requestCount']}")
 
-    current_time = arrow.now() #TODO: USE DATETIME
+    current_date = arrow.now() #TODO: USE DATETIME
     
     last_forecast_date = arrow.get(latest_forecast['hours'][3]['time']) 
     #TODO:factor in daylight savings time and time zones
     
-    if current_time.format('YYYY-MM-DD') != last_forecast_date.format('YYYY-MM-DD')\
+    if current_date.format('YYYY-MM-DD') != last_forecast_date.format('YYYY-MM-DD')\
                                             or allow_duplicates == True:
         print("current time != last forecast")
         latest_forecast = fetch_surf_forecast(start_time, end_time, lat, lng, 
@@ -92,9 +92,9 @@ def update_tides(lat, lng, start_time, end_time, api_key, allow_duplicates=False
     with open(TIDE_PATH, 'r') as file:
         latest_tides = json.load(file)
     
-    current_time = arrow.now() #TODO USE DATETIME
+    current_date = arrow.now() #TODO USE DATETIME
     last_tide_date = arrow.get(latest_tides['data'][0]['time']) 
-    if current_time.format('YYYY-MM-DD') != last_tide_date.format('YYYY-MM-DD')\
+    if current_date.format('YYYY-MM-DD') != last_tide_date.format('YYYY-MM-DD')\
         or allow_duplicates == True:
         print("current time != last forecast")
         latest_tides = fetch_tide(start_time, end_time, lat, lng, api_key)

@@ -7,7 +7,8 @@ def send_notification(title, message):
         notification.notify(
             title=title,
             message=message,
-            app_name='Your Application Name'
+            app_name='Your Application Name',
+            timeout=60*60*18
         )
         print("Notification sent successfully!")
     except Exception as e:

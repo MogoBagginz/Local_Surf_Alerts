@@ -11,7 +11,7 @@ import arrow
 import json
 import sqlite3
 
-from plyer import notification
+#from plyer import notification
 
 #TODO put api key in a local variable file
 API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac130004"
@@ -94,28 +94,3 @@ if __name__ == "__main__":
     tide_height_now = process_forecast.calculate_tide_height(latest_tides,
                                                              time_now_germany)
     print(f"The tide height at {time_now_germany} is {tide_height_now}.")
-
-    # Make a spot condition overview
-    # simple
-        # effective power
-        # swell messiness
-        # wind messiness
-    # less simple
-        # effective power
-            # primary wave height
-            # primary wave period
-            # primary wave relative direction
-            # secondary wave power
-            # secondary wave relative direction
-        # total messiness
-        # relative wind direction
-        # wind speed
-        # gust speed
-
-    # get check surf at spot
-    if process_forecast.check_surf_at_spot(whitesands_conf, whitesands_conditions):
-        print("Surfs up bro!!! Whitesands has surf!!!")
-
-        # send notification
-        notify.send_notification("SURF ALERT",
-                                  whitesands_conditions.short_summary())
