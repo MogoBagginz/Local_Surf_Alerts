@@ -1,4 +1,5 @@
 # User definitions
+forecasts/
 forecast.json
 data.json
 tide.json
