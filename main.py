@@ -13,8 +13,10 @@ import json
 
 #from plyer import notification
 
-#TODO put api key in local file, add to .gitignore
-API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac130004"
+# Get api key from file
+api_file = open('api_key', 'r')
+API_KEY= api_file.read().rstrip()
+api_file.close()
 
 # Get first hour of today
 TIME_START_FORECAST = arrow.now().floor('day')
@@ -25,8 +27,6 @@ TIME_END_FORECAST = arrow.now().shift(days=+7).ceil('day')
 LOCAL_OFFSET = 1 # UK local time with no daylight saving TODO add daylight savings
 
 # TODO get sunrise and sunset times and only get forecasts for these times
-# TODO make a spot condition overview
-
 #TODO create function that creates a new surf_break_configuration
 #TODO create function that changes a surf_break_configuration
 #TODO historic back testing

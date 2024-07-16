@@ -15,10 +15,9 @@ import arrow
 import json
 import datetime
 
-# TODO: get sunrise and sunset times and only get forecasts for these times
 # TODO either average out the data providers (e.g. NOAA) or select the best one
 
-class Surf_Break_Conditions: #TODO think about removing the Nones
+class Surf_Break_Conditions:
     def __init__(self, name, lat, long, time, primary_wave_energy,
                  secondary_wave_energy, combined_wave_energy, 
                  combined_swell_dir, rel_swell_dir, effective_power,
@@ -206,18 +205,13 @@ def get_combined_wave_energy(e_1, e_2, relative_dir):
 def wind_dir_human_readable(dir_degrees):
 
     dir_degrees = make_dir_positive(dir_degrees)
-
-    onshore_range = list(range(280, 360)) + list(range(0, 80))
-    offshore_range = range(100, 260)
-    side_on_range = list(range(260, 280)) + list(range(80, 100))
-
     dir_degrees = int(dir_degrees)
 
-    if dir_degrees in onshore_range:
+    if dir_degrees in list(range(280, 360)) + list(range(0, 80)):
         return "onshore"
-    elif dir_degrees in offshore_range:
+    elif dir_degrees in range(100, 260):
         return "offshore"
-    elif dir_degrees in side_on_range:
+    elif dir_degrees in list(range(260, 280)) + list(range(80, 100)):
         return "side-on"
     else:
         return "Invalid direction"

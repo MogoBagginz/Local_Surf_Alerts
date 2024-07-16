@@ -4,6 +4,7 @@ forecast.json
 data.json
 tide.json
 class_test.py
+api_key
 
 # whatever the hell is this
 *.swp
