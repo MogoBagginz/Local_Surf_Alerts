@@ -17,10 +17,10 @@ import json
 API_KEY="5c9db1cc-145a-11ef-9da7-0242ac130004-5c9db26c-145a-11ef-9da7-0242ac130004"
 
 # Get first hour of today
-TIME_AT_START_OF_DAY = arrow.now().floor('day')
+TIME_START_FORECAST = arrow.now().floor('day')
 
 # Get last hour of 7 days from now
-TIME_AT_END_OF_DAY_NEXT_WEEK = arrow.now().shift(days=+7).ceil('day')
+TIME_END_FORECAST = arrow.now().shift(days=+7).ceil('day')
 
 LOCAL_OFFSET = 1 # UK local time with no daylight saving TODO add daylight savings
 
@@ -41,15 +41,16 @@ if __name__ == "__main__":
     whitesands_conf = spot_conf.Surf_Break_Config()
     whitesands_conf.load_from_file(whitesands_conf_path)
     #whitesands_conf.save_to_file(whitesands_conf_path)
-    WHITESANDS_FORCAST_PATH = f"forecasts/{whitesands_conf.name}_forecast.json"
+    WHITESANDS_FORECAST_PATH = f"forecasts/{whitesands_conf.name}_forecast.json"
     popit_conf_path = "popit_conf.json"
     popit_conf = spot_conf.Surf_Break_Config()
     popit_conf.load_from_file(popit_conf_path)
+    POPIT_FORECAST_PATH = f"forecasts/{popit_conf.name}_forecast.json"
     #whitesands_conf.save_to_file(whitesands_conf_path)
 
     # fetch forecast
     current_date = arrow.utcnow().to('Europe/London').format('YYYY-MM-DD')
-    with open(WHITESANDS_FORCAST_PATH, 'r') as file:
+    with open(WHITESANDS_FORECAST_PATH, 'r') as file:
         last_forecast = json.load(file)
     forecast_date = arrow.get(last_forecast['hours'][3]['time']).format('YYYY-MM-DD')
     #TODO use logger                                                             
@@ -57,25 +58,25 @@ if __name__ == "__main__":
           f"current_date: {current_date}\t\tforecast_date: {forecast_date}")
     latest_forecast_whitesands = ff.update_forecast(whitesands_conf.latitude,
                                                      whitesands_conf.longitude,
-                                                     TIME_AT_START_OF_DAY,
-                                                     TIME_AT_END_OF_DAY_NEXT_WEEK,
+                                                     TIME_START_FORECAST,
+                                                     TIME_END_FORECAST,
                                                      current_date, forecast_date, 
-                                                     WHITESANDS_FORCAST_PATH,
+                                                     WHITESANDS_FORECAST_PATH,
                                                      API_KEY, last_forecast)
-    latest_forecast_popit = ff.update_forecast(whitesands_conf.latitude,
-                                                     whitesands_conf.longitude,
-                                                     TIME_AT_START_OF_DAY,
-                                                     TIME_AT_END_OF_DAY_NEXT_WEEK,
-                                                     current_date, forecast_date, 
-                                                     WHITESANDS_FORCAST_PATH,
-                                                     API_KEY, last_forecast)
+    latest_forecast_popit = ff.update_forecast(popit_conf.latitude,
+                                               popit_conf.longitude,
+                                               TIME_START_FORECAST,
+                                               TIME_END_FORECAST,
+                                               current_date, forecast_date, 
+                                               POPIT_FORECAST_PATH,
+                                               API_KEY, last_forecast)
 
     # fetch tides
     tide_path = 'tide.json'
     #latest_tides = ff.update_tides(whitesands_conf.latitude,
     #                                          whitesands_conf.longitude,
-    #                                          TIME_AT_START_OF_DAY,
-    #                                          TIME_AT_END_OF_DAY_NEXT_WEEK,
+    #                                          TIME_START_FORECAST,
+    #                                          TIME_END_FORECAST,
     #                                          tide_path,
     #                                          #current_date, forcast_date, 
     #                                          #WHITESANDS_FORCAST_PATH,
@@ -99,8 +100,13 @@ if __name__ == "__main__":
             whitesands_conditions = pf.process_forecast(whitesands_conf,
                                                         latest_forecast_whitesands,
                                                         hour + (days * 24))
+            popit_conditions = pf.process_forecast(popit_conf,
+                                                   latest_forecast_popit,
+                                                   hour + (days * 24))
             if pf.check_surf_at_spot(whitesands_conf, whitesands_conditions):
-                notify_string += whitesands_conditions.short_summary(days, hour)   
+                notify_string += whitesands_conditions.summary(days, hour)
+            if pf.check_surf_at_spot(popit_conf, popit_conditions):
+                notify_string += popit_conditions.summary(days, hour)
     if notify_string:
         notify.send_notification("Surfs up bro!!!", notify_string)
         

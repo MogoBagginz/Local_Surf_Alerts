@@ -64,8 +64,8 @@ def update_forecast(lat, lng, start_time, end_time, current_date,
                     last_forecast_date, path, api_key, latest_forecast, allow_duplicates=False):
     '''
     Parameters:
-        time_now: Should be formatted like this ('YYY-MM-DD')
-        latest_forcast_date: Should be formatted like this ('YYY-MM-DD') 
+        time_now: Should be formatted like this ('YYYY-MM-DD')
+        latest_forcast_date: Should be formatted like this ('YYYY-MM-DD') 
     '''
 
     #TODO use logger
@@ -79,7 +79,6 @@ def update_forecast(lat, lng, start_time, end_time, current_date,
         print("current time != last forecast")
         latest_forecast = fetch_surf_forecast(start_time, end_time, lat, lng, 
                                               api_key)
-        print(json.dumps(latest_forecast, indent=4))
         if 'errors' not in latest_forecast:#TODO add to a historical forecasts file/list 
             # TODO use sqlite, u can use json string into the db
             # key=date, value={tide: 1233}

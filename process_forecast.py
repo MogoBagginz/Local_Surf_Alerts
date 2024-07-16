@@ -29,28 +29,28 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
         self.lat = lat
         self.long = long
         self.time = time
-        self.primary_wave_energy = primary_wave_energy
-        self.secondary_wave_energy = secondary_wave_energy
-        self.combined_wave_energy = combined_wave_energy
-        self.combined_swell_dir = combined_swell_dir
-        self.rel_swell_dir = rel_swell_dir
-        self.effective_power = effective_power
-        self.rel_wind_dir = rel_wind_dir
-        self.messiness_wind = messiness_wind
-        self.messiness_swell = messiness_swell
-        self.messiness_total = messiness_total
-        self.primary_height = primary_height
-        self.primary_period = primary_period
-        self.primary_dir = primary_dir
-        self.wind_speed = wind_speed
-        self.wind_gust = wind_gust
-        self.wind_dir_human = wind_dir_human
+        self.primary_wave_energy = primary_wave_energy # kJ/m^2
+        self.secondary_wave_energy = secondary_wave_energy # kJ/m^2
+        self.combined_wave_energy = combined_wave_energy # kJ/m^2
+        self.combined_swell_dir = combined_swell_dir # degrees
+        self.rel_swell_dir = rel_swell_dir # degrees
+        self.effective_power = effective_power # pseudo-unit
+        self.rel_wind_dir = rel_wind_dir # degrees
+        self.messiness_wind = messiness_wind # %
+        self.messiness_swell = messiness_swell # %
+        self.messiness_total = messiness_total # %
+        self.primary_height = primary_height # Meters
+        self.primary_period = primary_period # seconds
+        self.primary_dir = primary_dir # degrees
+        self.wind_speed = wind_speed # km/h
+        self.wind_gust = wind_gust # km/h
+        self.wind_dir_human = wind_dir_human # onshore, offshore, side-on
    
     def short_summary(self, day=0, hour=0):
         rtn_val = f"\n- {self.name} surf in {day} days at {hour} o'clock -\n\n"\
                 f"Effective power: {self.effective_power:.2f}\n"\
-                f"Messiness from swell: {self.messiness_swell:.0f}%\n"\
-                f"Messiness from wind: {self.messiness_wind:.0f}%\n"
+                f"Messiness: {self.messiness_total:.0f}%\n"\
+                f"Wind is {self.wind_speed:.0f} km/h {self.wind_dir_human}\n"
         return rtn_val
 
     def summary(self, day=0, hour=0):
@@ -59,7 +59,7 @@ class Surf_Break_Conditions: #TODO think about removing the Nones
                   f"Effective power: {self.effective_power:.2f}\n"\
                   f"Primary height: {self.primary_height:.2f} meters\n"\
                   f"Primary period: {self.primary_period:.2f} seconds\n"\
-                  f"Primary direction: {self.primary_dir:.2f}\n"\
+                  f"Primary direction: {dir_to_nesw(self.primary_dir)}\n"\
                   f"Secondary wave power: {self.secondary_wave_energy:.2f}\n"\
                   f"Secondary wave relative direction: {self.combined_swell_dir:.2f}\n"\
                   f"Messiness: {self.messiness_total:.0f}%\n"\
@@ -114,9 +114,7 @@ def process_forecast(spot_conf, forecast, hour):
     
     rel_wind_dir = get_relative_dir(spot_conf.break_direction,
                                     forecast['hours'][hour]['windDirection']['noaa'])
-
-    wind_dir_human = dir_human_readable(rel_wind_dir)
-
+    wind_dir_human = wind_dir_human_readable(rel_wind_dir)
     # - check if the swell make it messy -
     if check_relatively_equal(primary_wave_energy, secondary_wave_energy) \
     and abs(rel_swell_dir) > 30:
@@ -205,13 +203,15 @@ def get_combined_wave_energy(e_1, e_2, relative_dir):
 
     return combined_wave_energy
 
-def dir_human_readable(dir_degrees):
-    if dir_degrees < 0 and dir_degrees > -360:
-        dir_degrees =+ 360
+def wind_dir_human_readable(dir_degrees):
 
-    onshore_range = range(45, 135)
-    offshore_range = range(225, 315)
-    side_on_range = list(range(135, 225)) + list(range(315, 360)) + list(range(0, 45))
+    dir_degrees = make_dir_positive(dir_degrees)
+
+    onshore_range = list(range(280, 360)) + list(range(0, 80))
+    offshore_range = range(100, 260)
+    side_on_range = list(range(260, 280)) + list(range(80, 100))
+
+    dir_degrees = int(dir_degrees)
 
     if dir_degrees in onshore_range:
         return "onshore"
@@ -221,6 +221,57 @@ def dir_human_readable(dir_degrees):
         return "side-on"
     else:
         return "Invalid direction"
+
+def dir_to_nesw(dir_degrees):
+    dir_degrees = make_dir_positive(dir_degrees)
+    dir_degrees = int(dir_degrees)
+    if dir_degrees in list(range(348, 360)) + list(range(0, 12)):
+        return "North (N)"
+    elif dir_degrees in range(12,34):
+        return "North-Northeast (NNE)"
+    elif dir_degrees in range(34,56):
+        return "Northeast (NE)"
+    elif dir_degrees in range(56, 79):
+        return "East-Northeast (ENE)"
+    elif dir_degrees in range(79, 102):
+        return "East (E)"
+    elif dir_degrees in range(102, 124):
+        return "East-Southeast (ESE)"
+    elif dir_degrees in range(124, 146):
+        return "Southeast (SE)"
+    elif dir_degrees in range(146, 169):
+        return "South-Southeast (SSE)"
+    elif dir_degrees in range(169, 191):
+        return "South (S)"
+    elif dir_degrees in range(191, 214):
+        return "South-Southwest (SSW)"
+    elif dir_degrees in range(214, 236):
+        return "Southwest (SW)"
+    elif dir_degrees in range(236, 259):
+        return "West-Southwest (WSW)"
+    elif dir_degrees in range(259, 281):
+        return "West (W)"
+    elif dir_degrees in range(281, 304):
+        return "West-Northwest (WNW)"
+    elif dir_degrees in range(304, 326):
+        return "Northwest (NW)"
+    elif dir_degrees in range(326, 349):
+        return "North-Northwest (NNW)"
+    else:
+        return "Invalid direction"
+
+def make_dir_positive(dir_degrees):
+    '''
+    Make the direction positive
+    '''
+    if dir_degrees < 0 and dir_degrees >= -360:
+        dir_degrees += 360
+        return dir_degrees
+    elif dir_degrees < -360 or dir_degrees > 360:
+        raise ValueError("dir_degrees must be greater or less than -360, 360 "
+                         "respectively")
+    else:
+        return dir_degrees
 
 def calculate_tide_height(tide_data, target_time):
     """
