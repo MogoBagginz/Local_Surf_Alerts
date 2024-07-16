@@ -68,12 +68,6 @@ def update_forecast(lat, lng, start_time, end_time, current_date,
         latest_forcast_date: Should be formatted like this ('YYYY-MM-DD') 
     '''
 
-    #TODO use logger
-    #print(f"latest_forecast['meta']['requestCount'] : {latest_forecast['meta']['requestCount']}")
-
-    # current_date = arrow.now() #TODO USE DATETIME
-    
-    #last_forecast_date = arrow.get(latest_forecast['hours'][3]['time']) 
     #TODO factor in daylight savings time and time zones
     if current_date != last_forecast_date or allow_duplicates == True:
         print("current time != last forecast")
@@ -91,13 +85,49 @@ def update_forecast(lat, lng, start_time, end_time, current_date,
 
     return latest_forecast
 
+def already_fetched(current_date, last_fetch_date):
+    '''
+    Parameters:
+        time_now: Should be formatted like this ('YYYY-MM-DD')
+        latest_forcast_date: Should be formatted like this ('YYYY-MM-DD') 
+    '''
+    # TODO check if the dates are formatted correctly
+    if current_date != last_forecast_date:
+        print("current time != last forecast")
+        return False
+    else:
+        return True
+
+def store_forecast(path, latest_forecast):
+    if 'errors' not in latest_forecast:#TODO add to a historical forecasts file/list 
+        # TODO use sqlite, u can use json string into the db
+        # key=date, value={tide: 1233}
+        print("----------------no errors----------")
+        with open(path, 'w') as json_file:
+            json.dump(latest_forecast, json_file, indent=4)
+        return True
+    else:
+        print(f"Failed updateing the forcast for {latest_forecast_path}:"\
+              f"{json.dump(latest_forecast['errors'])}")
+        return False
+
+# fetch_forcast(api_key, allow_duplicates=False) 
+    # check if forecast has been checked already "if already_fetched(current_date, last_fetch_date)"
+        # returns true or false
+    # fetch forecast
+        # returns forecast
+    # fetch_tide
+        # returns tide_info
+    # put forecast in database
+        #returns true or false
+
 def update_tides(lat, lng, start_time, end_time, tide_path, api_key, 
                  allow_duplicates=False):
 
     with open(tide_path, 'r') as file:
         latest_tides = json.load(file)
  
-    #TODO put the result of the next two lines in the class foe cleanness 
+    #TODO put the result of the next two lines in the class for cleanness 
     current_date = arrow.now() #TODO USE DATETIME
     last_tide_date = arrow.get(latest_tides['data'][0]['time']) 
     if current_date.format('YYYY-MM-DD') != last_tide_date.format('YYYY-MM-DD')\
