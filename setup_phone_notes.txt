@@ -1,0 +1,23 @@
+install f-droid
+
+install termux from f-droid
+
+go to surf alert github page and download zip from develop branch
+
+download api_key
+
+in termux
+	pkg install python termux-api p7zip python3
+
+	pip3 install requests arrow 
+
+	7z x <github.zip>
+
+	mv <Downloads>/api_key ./Local_Surf_Alerts-dev/
+
+	cd Local_Surf_Alerts-dev/
+
+	mkdir forecasts
+
+	./main.py
+	

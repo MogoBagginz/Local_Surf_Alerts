@@ -1,5 +1,6 @@
 # User definitions
-forecasts/
+forecasts/*
+!forecasts/
 forecast.json
 data.json
 tide.json
