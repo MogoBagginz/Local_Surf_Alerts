@@ -4,7 +4,7 @@ surf cam = https://www.surfline.com/surf-report/whitesands/584204204e65fad6a7709
 """
 # TODO look for a language server
 # TODO find addon that list classes function files 
-import notify
+import notify_phone as notify
 import spot_conf
 import process_forecast as pf
 import fetch_forecast as ff
