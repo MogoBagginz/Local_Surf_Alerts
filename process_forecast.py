@@ -204,8 +204,7 @@ def get_combined_wave_energy(e_1, e_2, relative_dir):
 
 def wind_dir_human_readable(dir_degrees):
 
-    dir_degrees = make_dir_positive(dir_degrees)
-    dir_degrees = int(dir_degrees)
+    dir_degrees = int(make_dir_positive(dir_degrees))
 
     if dir_degrees in list(range(280, 360)) + list(range(0, 80)):
         return "onshore"
@@ -217,8 +216,7 @@ def wind_dir_human_readable(dir_degrees):
         return "Invalid direction"
 
 def dir_to_nesw(dir_degrees):
-    dir_degrees = make_dir_positive(dir_degrees)
-    dir_degrees = int(dir_degrees)
+    dir_degrees = int(make_dir_positive(dir_degrees))
     if dir_degrees in list(range(348, 360)) + list(range(0, 12)):
         return "North (N)"
     elif dir_degrees in range(12,34):
