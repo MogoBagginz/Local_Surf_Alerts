@@ -65,10 +65,10 @@ class Surf_Break_Conditions:
                   f"Messiness: {self.messiness_total:.0f}%\n"\
                   f"Relative wind direction: {self.rel_wind_dir:.2f}\n"\
                   f"Wind speed: {self.wind_speed:.2f} kph\n"\
-                  f"Wind gust: {self.wind_gust:.2f} kph\n"
-                  f"extra line 1\n"
-                  f"extra line 2\n"
-                  f"extra line 3\n"
+                  f"Wind gust: {self.wind_gust:.2f} kph\n"\
+                  f"extra line 1\n"\
+                  f"extra line 2\n"\
+                  f"extra line 3\n"\
                   f"extra line 4\n"
         return rtn_val
 
