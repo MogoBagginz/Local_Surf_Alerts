@@ -53,35 +53,23 @@ class Surf_Break_Conditions:
         return rtn_val
 
     def summary(self, day=0, hour=0):
-        rtn_val = f"\n--- {self.name} condition summary ---\n\n"\
+        rtn_val = f"--- {self.name} condition summary ---\n"\
                   f"In {day} days at {hour} o'clock\n"\
                   f"Effective power: {self.effective_power:.2f}\n"\
                   f"Primary height: {self.primary_height:.2f} meters\n"\
                   f"Primary period: {self.primary_period:.2f} seconds\n"\
                   f"Primary direction: {dir_to_nesw(self.primary_dir)}\n"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456"\
-                  f"12345678901234567890123456789012345678901234567890123456\n"\
+                  #"12345678901234567890123456789012345678901234567890123456\n"\
                   f"Secondary wave power: {self.secondary_wave_energy:.2f}\n"\
                   f"Secondary wave relative direction: {self.combined_swell_dir:.2f}\n"\
                   f"Messiness: {self.messiness_total:.0f}%\n"\
                   f"Relative wind direction: {self.rel_wind_dir:.2f}\n"\
                   f"Wind speed: {self.wind_speed:.2f} kph\n"\
                   f"Wind gust: {self.wind_gust:.2f} kph\n"
+                  f"extra line 1\n"
+                  f"extra line 2\n"
+                  f"extra line 3\n"
+                  f"extra line 4\n"
         return rtn_val
 
     def __str__(self):
