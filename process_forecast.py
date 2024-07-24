@@ -59,6 +59,7 @@ class Surf_Break_Conditions:
                   f"Primary height: {self.primary_height:.2f} meters\n"\
                   f"Primary period: {self.primary_period:.2f} seconds\n"\
                   f"Primary direction: {dir_to_nesw(self.primary_dir)}\n"\
+                  f"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890\n"\
                   f"Secondary wave power: {self.secondary_wave_energy:.2f}\n"\
                   f"Secondary wave relative direction: {self.combined_swell_dir:.2f}\n"\
                   f"Messiness: {self.messiness_total:.0f}%\n"\
