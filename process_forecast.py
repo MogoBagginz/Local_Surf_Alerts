@@ -93,6 +93,9 @@ def process_forecast(spot_conf, forecast, hour):
     time = hour
     primary_height = forecast['hours'][hour]['swellHeight']['noaa']
     primary_period = forecast['hours'][hour]['swellPeriod']['noaa']
+    secondary_period = forecast['hours'][hour]['secondarySwellPeriod']['noaa']
+    secondary_height = forecast['hours'][hour]['secondarySwellHeight']['noaa']
+    secondary_dir = forecast['hours'][hour]['secondarySwellDirection']['noaa']
     primary_dir = forecast['hours'][hour]['swellDirection']['noaa']
     wind_speed = mps_to_kph(forecast['hours'][hour]['windSpeed']['noaa'])
     wind_gust = mps_to_kph(forecast['hours'][hour]['gust']['noaa'])
@@ -100,11 +103,10 @@ def process_forecast(spot_conf, forecast, hour):
     primary_wave_energy = get_wave_energy(float(primary_period),
                                           float(primary_height))
 
-    secondary_wave_energy = get_wave_energy(float(forecast['hours'][hour]['secondarySwellPeriod']['noaa']),
-                                            float(forecast['hours'][hour]['secondarySwellHeight']['noaa']))
+    secondary_wave_energy = get_wave_energy(float(secondary_period),
+                                            float(secondary_height))
 
-    combined_swell_dir = get_relative_dir(forecast['hours'][hour]['swellDirection']['noaa'],
-                                          forecast['hours'][hour]['secondarySwellDirection']['noaa'])
+    combined_swell_dir = get_relative_dir(primary_dir, secondary_dir)
 
     combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
                                                     secondary_wave_energy,
