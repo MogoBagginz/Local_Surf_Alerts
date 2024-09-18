@@ -12,14 +12,12 @@ it returns a spot condition overview
 
 import math
 import arrow
-import json
-import datetime
 
 # TODO either average out the data providers (e.g. NOAA) or select the best one
 
-class Surf_Break_Conditions:
+class SurfBreakConditions:
     def __init__(self, name, lat, long, time, primary_wave_energy,
-                 secondary_wave_energy, combined_wave_energy, 
+                 secondary_wave_energy, combined_wave_energy,
                  combined_swell_dir, rel_swell_dir, effective_power,
                  rel_wind_dir, messiness_wind, messiness_swell, messiness_total,
                  primary_height, primary_period, primary_dir,
@@ -44,7 +42,7 @@ class Surf_Break_Conditions:
         self.wind_speed = wind_speed # km/h
         self.wind_gust = wind_gust # km/h
         self.wind_dir_human = wind_dir_human # onshore, offshore, side-on
-   
+
     def short_summary(self, day=0, hour=0):
         rtn_val = f"\n- {self.name} surf in {day} days at {hour} o'clock -\n\n"\
                 f"Effective power: {self.effective_power:.2f}\n"\
@@ -81,10 +79,10 @@ class Surf_Break_Conditions:
             rtn_val += f"{attr}: {value}\n"
         return rtn_val
 
-def check_surf_at_spot(spot_conf, spot_conditions): 
+def check_surf_at_spot(spot_conf, spot_conditions):
     if spot_conditions.effective_power >= spot_conf.min_wave_energy \
     and spot_conditions.messiness_total <= 100:
-        return True 
+        return True
     else:
         return False
 
@@ -98,24 +96,24 @@ def process_forecast(spot_conf, forecast, hour):
     primary_dir = forecast['hours'][hour]['swellDirection']['noaa']
     wind_speed = mps_to_kph(forecast['hours'][hour]['windSpeed']['noaa'])
     wind_gust = mps_to_kph(forecast['hours'][hour]['gust']['noaa'])
-    
+
     primary_wave_energy = get_wave_energy(float(primary_period),
                                           float(primary_height))
-    
+
     secondary_wave_energy = get_wave_energy(float(forecast['hours'][hour]['secondarySwellPeriod']['noaa']),
                                             float(forecast['hours'][hour]['secondarySwellHeight']['noaa']))
-    
+
     combined_swell_dir = get_relative_dir(forecast['hours'][hour]['swellDirection']['noaa'],
                                           forecast['hours'][hour]['secondarySwellDirection']['noaa'])
 
     combined_wave_energy = get_combined_wave_energy(primary_wave_energy,
                                                     secondary_wave_energy,
                                                     combined_swell_dir)
-    
+
     rel_swell_dir = get_relative_dir(spot_conf.break_direction, combined_swell_dir)
-    
+
     effective_power = calculate_effective_power(combined_wave_energy, rel_swell_dir)
-    
+
     rel_wind_dir = get_relative_dir(spot_conf.break_direction,
                                     forecast['hours'][hour]['windDirection']['noaa'])
     wind_dir_human = wind_dir_human_readable(rel_wind_dir)
@@ -129,7 +127,7 @@ def process_forecast(spot_conf, forecast, hour):
             messiness_swell =  (secondary_wave_energy / primary_wave_energy) * 100
     else:
         messiness_swell = 0
-    
+
     # - check if the wind make it massy -
     if abs(rel_wind_dir) >= 180: # offshore
         messiness_wind = (wind_speed / spot_conf.max_offshore_wind_speed) * 100
@@ -137,10 +135,10 @@ def process_forecast(spot_conf, forecast, hour):
         messiness_wind = (wind_speed / spot_conf.max_onshore_wind_speed) * 100
     messiness_total = messiness_wind + messiness_swell
 
-    
-    return Surf_Break_Conditions(name, lat, long, time, primary_wave_energy,
+
+    return SurfBreakConditions(name, lat, long, time, primary_wave_energy,
             secondary_wave_energy, combined_wave_energy, combined_swell_dir,
-            rel_wind_dir, effective_power, rel_swell_dir, messiness_wind,
+            rel_swell_dir, effective_power, rel_wind_dir, messiness_wind,
             messiness_swell, messiness_total, primary_height, primary_period,
             primary_dir, wind_speed, wind_gust,
             wind_dir_human)#TODO make a save conditions funk
@@ -151,17 +149,17 @@ def mps_to_kph(mps):
 def check_relatively_equal(a, b, rel_tol=0.5):
     return abs(a - b) <= rel_tol
 
-def calculate_effective_power(P, theta):
+def calculate_effective_power(power, theta):
     # Calculate the effective power of the wave hitting the beach at an angle.
-    P = float(P)
+    power = float(power)
     theta = float(theta)
-    if P < 0:
-        raise ValueError("P must be a positive number.")
+    if power < 0:
+        raise ValueError("power must be a positive number.")
     if abs(theta) > 360:
         raise ValueError("Direction is in degrees and can not be greater"
                          "than or less than +-360")
-    P_eff = P * abs(math.cos(math.radians(theta/2)))
-    return P_eff
+    power_eff = power * abs(math.cos(math.radians(theta/2)))
+    return power_eff
 
 def get_relative_dir(primary_dir, secondary_dir):
     # normalize angles
@@ -169,8 +167,8 @@ def get_relative_dir(primary_dir, secondary_dir):
     primary_dir = primary_dir % 360
 
     relative_angle = secondary_dir - primary_dir
-    
-    if relative_angle < -180: 
+
+    if relative_angle < -180:
         relative_angle += 360
     elif relative_angle >= 180:
         relative_angle -= 360
@@ -184,7 +182,7 @@ def get_wave_energy(period, height):
     # returns energy_density = kJ/m^2
     water_density = 1025 #kg/m^3
     gravity = 9.8 #m/s^2
-    
+
     period = float(period)
     height = float(height)
 
@@ -285,7 +283,7 @@ def calculate_tide_height(tide_data, target_time):
     # Extract tide data
     high_tides = [item for item in tide_data['data'] if item['type'] == 'high']
     low_tides = [item for item in tide_data['data'] if item['type'] == 'low']
-    
+
     if not high_tides or not low_tides:
         raise ValueError("Insufficient tide data in JSON.")
 
@@ -294,10 +292,10 @@ def calculate_tide_height(tide_data, target_time):
 
     high_tide_height = high_tide['height']
     high_tide_time = arrow.get(high_tide['time'])
-    
+
     low_tide_height = low_tide['height']
     low_tide_time = arrow.get(low_tide['time'])
-    
+
     # Convert target_time
     target_time = arrow.get(target_time)
 
