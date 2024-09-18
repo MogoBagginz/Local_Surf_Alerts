@@ -6,7 +6,7 @@ surf cam = https://www.surfline.com/surf-report/whitesands/584204204e65fad6a7709
 # TODO find addon that list classes function files
 import json
 import arrow
-import notify_phone as notify
+import notify
 import spot_conf
 import process_forecast as pf
 import fetch_forecast as ff
@@ -14,8 +14,8 @@ import fetch_forecast as ff
 LOCAL_OFFSET = 1 # UK local time with no daylight saving TODO add daylight savings
 
 # TODO get sunrise and sunset times and only get forecasts for these times
-#TODO create function that creates a new surf_break_configuration
-#TODO create function that changes a surf_break_configuration
+#TODO create function that creates a new SurfBreakConfiguration
+#TODO create function that changes a SurfBreakConfiguration
 #TODO historic back testing
 #TODO function that takes time and location when the surf is good and it saves
 # ... all conditions into a file. the file can be used when configuring max
@@ -26,12 +26,12 @@ if __name__ == "__main__":
     FORECAST_LEN = 5
     # load spot configurations #################################################
     WHITESANDS_CONF_PATH = "whitesands_conf.json"
-    whitesands_conf = spot_conf.Surf_Break_Config()
+    whitesands_conf = spot_conf.SurfBreakConfig()
     whitesands_conf.load_from_file(WHITESANDS_CONF_PATH)
     #whitesands_conf.save_to_file(WHITESANDS_CONF_PATH)
     WHITESANDS_FORECAST_PATH = f"forecasts/{whitesands_conf.name}_forecast.json"
     POPIT_CONF_PATH = "popit_conf.json"
-    popit_conf = spot_conf.Surf_Break_Config()
+    popit_conf = spot_conf.SurfBreakConfig()
     popit_conf.load_from_file(POPIT_CONF_PATH)
     POPIT_FORECAST_PATH = f"forecasts/{popit_conf.name}_forecast.json"
     #whitesands_conf.save_to_file(WHITESANDS_CONF_PATH)

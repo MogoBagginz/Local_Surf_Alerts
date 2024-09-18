@@ -2,8 +2,8 @@
 
 import json
 
-# use Object --- Surf_Break_Config(Object)  
-class Surf_Break_Config:
+# use Object --- SurfBreakConfig(Object)
+class SurfBreakConfig:
     def __init__(self, name='Default name', latitude=None, longitude=None,
                  break_direction=None,ideal_swell_direction=225,
                  min_wave_energy=0.43, max_onshore_wind_speed=20,
@@ -19,12 +19,12 @@ class Surf_Break_Config:
         self.max_offshore_wind_speed    = max_offshore_wind_speed
 
     def save_to_file(self, file_path):
-        with open(file_path, 'w') as file:
+        with open(file_path, 'w', encoding='utf-8') as file:
             json.dump(self.__dict__, file)
 
     def load_from_file(self, file_path):
         try:
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 self.name                       = data['name']
                 self.latitude                   = data['latitude']
