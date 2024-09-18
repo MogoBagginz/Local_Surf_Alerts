@@ -1,6 +1,8 @@
 =-=-=-=-=-=-=- Notes from The Maritime Engineering Reference Book -=-=-=-=-=-=-=
 
-stokes and airy theory
+
+AIRY THEORY
+
 
 airy theory is good for low amplitude vs wave length and depth (offshore inc.
 non-local big swell)
@@ -28,6 +30,23 @@ because larger waves travel faster, the largest waves arrive at the beach first.
 	this is calles the normal dispersion of waves
 
 
+STOKES THEORY
+
+
 stokes theory is good for high amplitude vs wave length and dept (coastal or
 storm swell)
 	nonlinear wave theory
+
+
+CONIDIAL WAVE THEORY
+
+
+For shallow water regions, conidial wave theory, originally developed by
+Korteweg and DeVries in 1895, provides a rather reliable prediction of the wave
+form and associates motions for some conditions.
+
+
+STREAM FUNCTIONS
+
+
+also for shallow water
